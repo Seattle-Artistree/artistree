@@ -1,5 +1,5 @@
 {
-  "name": "artistree-server",
+  "name": "artistree",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -18,9 +18,10 @@
   },
   "homepage": "https://github.com/Seattle-Artistree/artistree-server#readme",
   "dependencies": {
-    "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
-    "pages": "0.0.16"
+    "pages": "0.0.16",
+    "pg": "^7.4.1",
+    "superagent": "^3.8.2"
   }
 }
