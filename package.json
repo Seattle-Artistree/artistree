@@ -23,5 +23,6 @@
     "express": "^4.16.3",
     "pages": "0.0.16",
     "pg": "^7.4.1"
-  }
+  },
+  "devDependencies": {}
 }
