@@ -1,0 +1,26 @@
+{
+  "name": "artistree-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seattle-Artistree/artistree-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Seattle-Artistree/artistree-server/issues"
+  },
+  "homepage": "https://github.com/Seattle-Artistree/artistree-server#readme",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "pages": "0.0.16"
+  }
+}
