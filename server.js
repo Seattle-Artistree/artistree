@@ -16,12 +16,12 @@ let redirect_uri =
   process.env.REDIRECT_URI ||
   'http://localhost:8888/callback';
 
-client.connect();
-client.on('error', err => console.error(err));
+// client.connect();
+// client.on('error', err => console.error(err));
 
 // Application Middleware
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+// app.use(express.json());
+// app.use(express.urlencoded({extended: true}));
 // app.use(express.static('./public'));
 
 /**
