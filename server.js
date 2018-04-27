@@ -3,30 +3,35 @@ const express = require('express'); // Express web server framework
 const request = require('request'); // "Request" library
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-
 const pg = require('pg');
-// const fs = require('fs');
+
+require('dotenv').config();
+
+
+// ************ Application Setup *************
 const PORT = process.env.PORT || 8888;
-const conString = 'postgres://postgres:wasd@localhost:5432/artistree';
-const client = new pg.Client(conString);
+const CLIENT_URL = process.env.CLIENT_URL;
+const app = express();
+
+
+// ************ Database Setup *************
+const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
-client.on('error', err => {
-    console.error(err);
-  });
-  
+client.on('error', err => console.error(err));
+
 let redirect_uri =
 process.env.REDIRECT_URI ||
 'http://localhost:8888/callback';
 
-const stateKey = 'spotify_auth_state';
 
-const app = express();
-
-// Application Middleware
+// ************ Application Middleware ************
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
 
+
+// ************ Spotify OAuth & API Calls ************
+const stateKey = 'spotify_auth_state';
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
