@@ -16,6 +16,14 @@ let redirect_uri =
   process.env.REDIRECT_URI ||
   'http://localhost:8888/callback';
 
+client.connect();
+client.on('error', err => console.error(err));
+
+// Application Middleware
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+// app.use(express.static('./public'));
+
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -79,7 +87,7 @@ app.get('/callback', function(req, res) {
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(process.env.SPOTIFY_CLIENT_ID+ ':' + process.env.SPOTIFY_CLIENT_SECRET).toString('base64'))
+        'Authorization': 'Basic ' + (new Buffer(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64'))
       },
       json: true
     };
@@ -140,6 +148,9 @@ app.get('/refresh_token', function(req, res) {
     }
   });
 });
+
+
+app.get('/test', (req, res) => res.send('hello world, it works'));
 
 console.log('Listening on 8888');
 app.listen(8888);
