@@ -17,32 +17,62 @@
 				width: 500px;
 			}
 		</style>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" type="text/css" media="screen" href="base.css"/>
-		<link rel="stylesheet" type="text/css" media="screen" href="layout.css"/>
-		<link rel="stylesheet" type="text/css" media="screen" href="module.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" type="text/css" media="screen" href="reset.css" />
-			
-			<!-- Application Templates -->
-			<script type="text/x-handlebars-template" id="error-template">
+		<link rel="stylesheet" type="text/css" media="screen" href="base.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="layout.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="module.css" />
+		
+		<!-- Application Templates -->
+		<script id="user-profile-template" type="text/x-handlebars-template">
+			<h1>Logged in as {{display_name}}</h1>
+			<div class="media">
+				<div class="pull-left">
+					<img class="media-object" width="150" src="{{images.0.url}}" />
+				</div>
+				<div class="media-body">
+					<dl class="dl-horizontal">
+						<dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
+						<dt>Id</dt><dd>{{id}}</dd>
+						<dt>Email</dt><dd>{{email}}</dd>
+						<dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
+						<dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
+						<dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
+						<dt>Country</dt><dd>{{country}}</dd>
+					</dl>
+				</div>
+			</div>
+		</script>
+		
+		<script id="oauth-template" type="text/x-handlebars-template">
+			<h2>oAuth info</h2>
+			<dl class="dl-horizontal">
+				<dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
+				<dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
+			</dl>
+		</script>
+
+		<script type="text/x-handlebars-template" id="error-template">
 			<h3>Oops, something went wrong!</h3>
 			<p>{{status}}: {{statusText}}</p>
 		</script>
 		
-		<script type="text/x-handlebars-template" id="book-list-template">
+		<!-- Below Handlebars templates need rebuild for each view -->
+
+		<!-- <script type="text/x-handlebars-template" id="home-template">
 			<li class="book-items" data-bookid={{book_id}}>
-			<div class="book-container">
-				<img src={{image_url}}>
-				<div class="book-overlay">
-					<h3>{{title}}</h3>
-					<p>{{author}}</p>
+				<div class="book-container">
+					<img src={{image_url}}>
+					<div class="book-overlay">
+						<h3>{{title}}</h3>
+						<p>{{author}}</p>
+					</div>
 				</div>
-			</div>
-			<button><a href="/details/{{book_id}}">View Details</a></button>
-		</li>
+				<button><a href="/details/{{book_id}}">View Details</a></button>
+			</li>
 		</script>
 		
-		<script type="text/x-handlebars-template" id="one-book-template">
+		<script type="text/x-handlebars-template" id="about-template">
 			<section id="book-detail">
 				<li class="one-book" data-bookid="{{book_id}}">
 					<div class="book-container">
@@ -56,22 +86,21 @@
 					</div>
 				</li>
 			</section>
-		</script>
-
+		</script> -->
 	</head>
 
 	<body>
+		<!-- Header needs data-content and classes renamed -->
 		<header>
 			<div class="header-content">
 				<a href="/"><img src="http://via.placeholder.com/100x100" alt="logo"></a>
-				<h1>Code Fellows Books</h1>
+				<h2>Artistree</h2>
 			</div>
-			
 			<nav class="main-nav">
 				<div class="icon-menu"></div>
 				<ul>
 					<li class="tab" data-content="books"><a href="/" class="icon-home"> Home</a></li>
-					<li class="tab" data-content="new"><a href="/new" class="icon-address-book">Add Books</a></li>
+					<li class="tab" data-content="new"><a href="/new" class="icon-address-book">About Us</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -96,20 +125,15 @@
 				<section id="error-message"></section>
 			</section>
 			
-			<section class="title-view container">
-				<h2 class="view-title">Explore</h2>
+			<section class="landing-view container">
+				<h1 class="main-view-title">Artistree</h1>
 				
 			</section>
 			
-			<section class="error-view container">
-				<h2 class="view-title">There be an issue, cap'n</h2>
-				<section id="error-message"></section>
-			</section>
-			
 			<section class="home-view container">
-				<h2 class="home-title">Explore</h2>
-				<section class="book-list">
-					<ul id="book-list"></ul>
+				<h2 class="view-title">Explore</h2>
+				<section class="nodes-box">
+					<ul id="node-list"></ul>
 				</section>
 			</section>
 			
@@ -125,6 +149,7 @@
 				</form>
 			</section>	
 		</main>
+		
 		<footer>
 			<aside class="social-links">
 				<ul>
@@ -135,36 +160,13 @@
 				</ul>
 			</aside>
 		</footer>
-		<script id="user-profile-template" type="text/x-handlebars-template">
-			<h1>Logged in as {{display_name}}</h1>
-			<div class="media">
-				<div class="pull-left">
-					<img class="media-object" width="150" src="{{images.0.url}}" />
-				</div>
-				<div class="media-body">
-					<dl class="dl-horizontal">
-						<dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
-						<dt>Id</dt><dd>{{id}}</dd>
-						<dt>Email</dt><dd>{{email}}</dd>
-						<dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
-						<dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
-						<dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
-						<dt>Country</dt><dd>{{country}}</dd>
-					</dl>
-				</div>
-			</div>
-		</script>
+		
+		<!-- External CDN Resources -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+		<script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+		<!-- Application Resources -->
 
-		<script id="oauth-template" type="text/x-handlebars-template">
-			<h2>oAuth info</h2>
-			<dl class="dl-horizontal">
-				<dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
-				<dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
-			</dl>
-		</script>
-
-		<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
-		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 		<script>
 			(function() {
 				/**
@@ -232,10 +234,5 @@
 				}
 			})();
 		</script>
-		<!-- External CDN Resources -->
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-		<script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
-		<!-- Application Resources -->
 	</body>
 </html>
