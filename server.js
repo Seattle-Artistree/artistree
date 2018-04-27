@@ -1,4 +1,4 @@
-'strict use';
+'use strict';
 
 /**
  * This is an example of a basic node.js script that performs
