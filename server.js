@@ -4,16 +4,23 @@ const request = require('request'); // "Request" library
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 
+const pg = require('pg');
+// const fs = require('fs');
+const PORT = process.env.PORT || 8888;
+const conString = 'postgres://postgres:wasd@localhost:5432/artistree';
+const client = new pg.Client(conString);
+client.connect();
+client.on('error', err => {
+    console.error(err);
+  });
+  
 let redirect_uri =
-  process.env.REDIRECT_URI ||
-  'http://localhost:8888/callback';
+process.env.REDIRECT_URI ||
+'http://localhost:8888/callback';
 
 const stateKey = 'spotify_auth_state';
 
 const app = express();
-
-// client.connect();
-// client.on('error', err => console.error(err));
 
 // Application Middleware
 app.use(express.json());
@@ -145,5 +152,14 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/test', (req, res) => res.send('hello world, it works'));
 
+// Tests for CRUD w/ db
+// app.get('/artists', (req, res) => {
+//   client.query(`
+//     SELECT artist FROM artists;
+//   `)
+//     .then(result => res.send(result.rows))
+//     .catch(console.error);
+// });
+
 console.log('Listening on 8888');
-app.listen(8888);
+app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
