@@ -10,6 +10,9 @@ let redirect_uri =
 
 const stateKey = 'spotify_auth_state';
 
+let access_token = '';
+let refresh_token = '';
+
 const app = express();
 
 // client.connect();
@@ -88,19 +91,33 @@ app.get('/callback', function(req, res) {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
-        let access_token = body.access_token,
-          refresh_token = body.refresh_token;
+        // let access_token = body.access_token,
+        //   refresh_token = body.refresh_token;
+        access_token = body.access_token;
+        refresh_token = body.refresh_token;
 
-        const options = {
-          url: 'https://api.spotify.com/v1/me',
+
+        // const options = {
+        //   url: 'https://api.spotify.com/v1/me',
+        //   headers: { 'Authorization': 'Bearer ' + access_token },
+        //   json: true
+        // };
+
+        const options2 = {
+          url: 'https://api.spotify.com/v1/artists/10020',
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
         };
 
-        // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
+        request.get(options2, function(error, response, body) {
           console.log(body);
+          console.log(response);
         });
+
+        // use the access token to access the Spotify Web API
+        // request.get(options, function(error, response, body) {
+        //   console.log(body);
+        // });
 
         // we can also pass the token to the browser to make requests from there
         res.redirect('/#' +
@@ -121,7 +138,7 @@ app.get('/callback', function(req, res) {
 app.get('/refresh_token', function(req, res) {
 
   // requesting access token from refresh token
-  let refresh_token = req.query.refresh_token;
+  refresh_token = req.query.refresh_token;
   const authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + process.env.SPOTIFY_CLIENT_SECRET).toString('base64')) },
