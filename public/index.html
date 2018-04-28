@@ -30,97 +30,9 @@
 			<h3>Oops, something went wrong!</h3>
 			<p>{{status}}: {{statusText}}</p>
 		</script>
+
 		
-		<script type="text/x-handlebars-template" id="book-list-template">
-			<li class="book-items" data-bookid={{book_id}}>
-			<div class="book-container">
-				<img src={{image_url}}>
-				<div class="book-overlay">
-					<h3>{{title}}</h3>
-					<p>{{author}}</p>
-				</div>
-			</div>
-			<button><a href="/details/{{book_id}}">View Details</a></button>
-		</li>
-		</script>
-		
-		<script type="text/x-handlebars-template" id="one-book-template">
-			<section id="book-detail">
-				<li class="one-book" data-bookid="{{book_id}}">
-					<div class="book-container">
-						<img src={{image_url}}>
-						<div class="book-overlay">
-							<h3>{{title}}</h3>
-							<p>{{author}}</p>
-							<p>{{description}}</p>
-							<p>{{isbn}}</p>
-						</div>
-					</div>
-				</li>
-			</section>
-		</script>
-
-	</head>
-
-	<body>		
-		<main>
-			<div class="container">
-				<div id="login">
-					<h1>Welcome to Artistree</h1>
-					<a href="/login.html" class="btn btn-primary">Log in with Spotify</a>
-				</div>
-				<div id="loggedin">
-					<div id="user-profile">
-					</div>
-					<div id="oauth">
-					</div>
-					<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
-				</div>
-			</div>
-
-			<section class="error-view container">
-				<h2 class="view-title">Oh noes, we messed up!</h2>
-				<section id="error-message"></section>
-			</section>
-			
-			<section class="title-view container">
-				<h2 class="view-title">Explore</h2>
-				
-			</section>
-			
-			<section class="error-view container">
-				<h2 class="view-title">There be an issue, cap'n</h2>
-				<section id="error-message"></section>
-			</section>
-			
-			<section class="home-view container">
-				<h2 class="home-title">Explore</h2>
-				<section class="book-list">
-					<ul id="book-list"></ul>
-				</section>
-			</section>
-			
-			<section class="about-view container">
-				<h2 class="feedback-title">Questions, Comments, Suggestions?</h2>
-				<form id="feedback">
-					<input type="text" id="title" placeholder="title" /><br>
-					<input type="text" id="comment" placeholder="feedback" /><br>
-					<button type="submit">Submit</button>
-					
-					<!-- Need Photos and Bios!!! -->
-				
-				</form>
-			</section>	
-		</main>
-		<footer>
-			<aside class="social-links">
-				<ul>
-					<li><i class="icon-bars"><a href="public/styles/font/bars.png"></a></i></li>
-					<li><i class="icon-github"><a href="styles/font"></a></i></li>
-					<li><i class="icon-linkedin"><a href=""></a></i></li></ul>
-			</aside>
-			<h1>&copy 2018</h1>
-		</footer>
+		<!-- Application Templates -->
 		<script id="user-profile-template" type="text/x-handlebars-template">
 			<h1>Logged in as {{display_name}}</h1>
 			<div class="media">
@@ -140,7 +52,7 @@
 				</div>
 			</div>
 		</script>
-
+		
 		<script id="oauth-template" type="text/x-handlebars-template">
 			<h2>oAuth info</h2>
 			<dl class="dl-horizontal">
@@ -149,8 +61,118 @@
 			</dl>
 		</script>
 
-		<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
-		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<script type="text/x-handlebars-template" id="error-template">
+			<h3>Oops, something went wrong!</h3>
+			<p>{{status}}: {{statusText}}</p>
+		</script>
+
+	</head>
+
+	<body>
+		<!-- Header needs data-content and classes renamed -->
+		<header>
+			<div class="header-content">
+				<a href="/"><img src="http://via.placeholder.com/100x100" alt="logo"></a>
+				<h2>Artistree</h2>
+			</div>
+
+			<nav class="main-nav">
+				<ul>
+				</li><a href="/">Landing</a></li>
+			</li><a href="/home">Home</a></li>
+				<li><a href="/about">About Us</a></li>
+
+				</ul>
+			</nav>
+		</header>
+		
+
+		<main>
+			<div class="container">
+				<div class="page" id="login">
+					<h1>Welcome to Artistree</h1>
+					<a href="/login.html" class="btn btn-primary">Log in with Spotify</a>
+				</div>
+
+				<div id="loggedin">
+					<div id="user-profile">
+					</div>
+					<div id="oauth">
+					</div>
+					<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+				</div>
+			</div>
+
+			<section id="home-view" class="page">
+				<h1>Home Page</h1>
+				<p>This is the home view.</p>
+			</section>
+			
+			<section id="landing-view" class="page">
+				<h1>Landing View</h1>
+				<p>This is the landing view.</p>
+			</section>
+
+			<section id="about-view" class="page">
+					<h2 id="feedback-title">Questions, Comments, Suggestions?</h2>
+					<form class="feedback" id="feedback">
+						<input type="text" id="title" placeholder="title" /><br>
+						<input type="text" id="comment" placeholder="feedback" /><br>
+						<button type="submit">Submit</button>		
+						<!-- Need Photos and Bios!!! -->
+					</form>
+				</section>	
+
+
+			<section id="error-view" class="page">
+				<h2>Oh noes, we messed up!</h2>
+			</section>
+			
+
+
+
+		</main>
+
+		
+		<footer>
+			<aside class="social-links">
+				<ul>
+					<li><i class="icon-bars"><a href="public/styles/font/bars.png"></a></i></li>
+					<li><i class="icon-github"><a href="styles/font"></a></i></li>
+					<li><i class="icon-linkedin"><a href=""></a></i></li></ul>
+			</aside>
+			<h1>&copy 2018</h1>
+		</footer>
+		
+		<!-- External CDN Resources -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+		<script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+		<!-- Application Resources -->
+
+		<script src="./scripts/views/landing-view.js"></script>
+		<script src="./scripts/views/home-view.js"></script>
+		<script src="./scripts/views/about-view.js"></script>
+		<script src="./scripts/controllers/routes.js"></script>
+
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		<script>
 			(function() {
 				/**
@@ -218,10 +240,5 @@
 				}
 			})();
 		</script>
-		<!-- External CDN Resources -->
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-		<script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
-		<!-- Application Resources -->
 	</body>
 </html>

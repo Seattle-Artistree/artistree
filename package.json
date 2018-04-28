@@ -22,9 +22,12 @@
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "page": "^1.8.6",
     "pg": "^7.4.1",
     "querystring": "^0.2.0",
     "request": "^2.85.0",
+    "spotify-web-api-js": "^0.24.0",
     "superagent": "^3.8.2"
-  }
+  },
+  "devDependencies": {}
 }
