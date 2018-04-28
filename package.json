@@ -25,6 +25,8 @@
     "pg": "^7.4.1",
     "querystring": "^0.2.0",
     "request": "^2.85.0",
+    "spotify-web-api-js": "^0.24.0",
     "superagent": "^3.8.2"
-  }
+  },
+  "devDependencies": {}
 }
