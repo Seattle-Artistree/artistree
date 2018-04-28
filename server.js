@@ -11,8 +11,10 @@ require('dotenv').config();
 let access_token = '';
 let refresh_token = '';
 
+// ************ Application Setup *************
+const PORT = process.env.PORT || 8888;
+const CLIENT_URL = process.env.CLIENT_URL;
 const app = express();
-
 
 // ************ Database Setup *************
 const client = new pg.Client(process.env.DATABASE_URL);

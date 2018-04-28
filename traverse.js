@@ -36,12 +36,40 @@ var api_response = {
   "next" : "https://api.spotify.com/v1/me/top/artists?limit=1&offset=1"
 };
 
-function Artist(picture, name, id) {
-  this.picture = picture;
-  this.name = name;
+// this is a very critical part of your code.
+// you will need to carefully insert new artists that you fetch from API
+// in this
+var allArtists = [
+  { id: '000001',
+    name: 'Jain',
+    image: 'blah blah blah',
+    children: [  
+      { 
+        id: '000002',
+        name: 'Jameele',
+        image: 'jajajajaja',
+        children: []
+      },
+      { 
+        id: '000003',
+        name: 'Janis',
+        image: 'khakhakhakha',
+        children: []
+      }
+    ]
+  }
+];
+function Artist(id, name, image, children) {
   this.id = id;
+  this.name = name;
+  this.image = image;
+  this.children = {};
 }
+console.log(api_response.items[0].images[0].url);
 
 Artist.prototype.responseToObject = function(response) {
-  
-}
+  this.id = response.items[0].id;
+  this.name = response.items[0].name;
+  this.image = response.items[0].images[0].url;
+};
+// when we make a call for RELATED artist
