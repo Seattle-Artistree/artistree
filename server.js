@@ -8,11 +8,13 @@ const pg = require('pg');
 require('dotenv').config();
 
 
+let access_token = '';
+let refresh_token = '';
+
 // ************ Application Setup *************
 const PORT = process.env.PORT || 8888;
 const CLIENT_URL = process.env.CLIENT_URL;
 const app = express();
-
 
 // ************ Database Setup *************
 const client = new pg.Client(process.env.DATABASE_URL);
@@ -100,19 +102,33 @@ app.get('/callback', function(req, res) {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
-        let access_token = body.access_token,
-          refresh_token = body.refresh_token;
+        // let access_token = body.access_token,
+        //   refresh_token = body.refresh_token;
+        access_token = body.access_token;
+        refresh_token = body.refresh_token;
 
-        const options = {
-          url: 'https://api.spotify.com/v1/me',
+
+        // const options = {
+        //   url: 'https://api.spotify.com/v1/me',
+        //   headers: { 'Authorization': 'Bearer ' + access_token },
+        //   json: true
+        // };
+
+        const options2 = {
+          url: 'https://api.spotify.com/v1/artists/10020',
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
         };
 
-        // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
+        request.get(options2, function(error, response, body) {
           console.log(body);
+          console.log(response);
         });
+
+        // use the access token to access the Spotify Web API
+        // request.get(options, function(error, response, body) {
+        //   console.log(body);
+        // });
 
         // we can also pass the token to the browser to make requests from there
         res.redirect('/#' +
@@ -133,7 +149,7 @@ app.get('/callback', function(req, res) {
 app.get('/refresh_token', function(req, res) {
 
   // requesting access token from refresh token
-  let refresh_token = req.query.refresh_token;
+  refresh_token = req.query.refresh_token;
   const authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + process.env.SPOTIFY_CLIENT_SECRET).toString('base64')) },
@@ -154,17 +170,12 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
+app.get('/test', (req, res) => res.send('It\'s working!'));
 
-app.get('/test', (req, res) => res.send('hello world, it works'));
+// let url = 'https://api.spotify.com/v1/me/top/artists/';
 
-// Tests for CRUD w/ db
-// app.get('/artists', (req, res) => {
-//   client.query(`
-//     SELECT artist FROM artists;
-//   `)
-//     .then(result => res.send(result.rows))
-//     .catch(console.error);
-// });
+// app.get(url, (req, res) => console.log(res));
+
 
 console.log('Listening on 8888');
 app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
