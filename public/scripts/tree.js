@@ -13,7 +13,7 @@ var tree = d3.layout.tree()
 var diagonal = d3.svg.diagonal()
   .projection(function(d) { return [d.x, d.y]; });
 
-var svg = d3.select('body').append('svg')
+var svg = d3.select('#loggedin').append('svg')
   .attr('width', width + margin.right + margin.left)
   .attr('height', height + margin.top + margin.bottom)
   .append('g')
