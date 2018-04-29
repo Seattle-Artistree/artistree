@@ -5,7 +5,7 @@ var app = app || {};
   const aboutView = {};
 
   aboutView.init = () => $('#about-view').show();
- 
+
 
   module.aboutView = aboutView;
 

@@ -11,7 +11,4 @@ var app = app || {};
 
 })(app);
 
-// $(document).ready(() => {
-//   app.landingView.init();
-// });
 
