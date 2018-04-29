@@ -115,7 +115,7 @@ app.get('/callback', function(req, res) {
         // };
 
         const options2 = {
-          url: 'https://api.spotify.com/v1/artists/10020',
+          url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_range&limit=1',
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
         };

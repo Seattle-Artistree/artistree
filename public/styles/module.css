@@ -10,8 +10,14 @@
   stroke-width: 1.5px;
 }
 
+#artist_image {
+  border-radius: 50%;
+  
+}
+
 .node text {
-  font: 10px sans-serif;
+  font: 12px sans-serif;
+  color: firebrick
 }
 
 .link {
