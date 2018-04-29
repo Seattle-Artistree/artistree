@@ -4,7 +4,11 @@ var app = app || {};
 
   const landingView = {};
 
-  landingView.init = () => $('#landing-view').show();
+  landingView.init = () => {
+    $('#landing-view').show();
+    $('#login').show();
+    $('svg').hide();
+  };
 
 
   module.landingView = landingView;
