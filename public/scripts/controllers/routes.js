@@ -1,4 +1,3 @@
-
 'use strict';
 // all route changes should hide page containers
 page('/*', (ctx, next) => {
