@@ -6,24 +6,12 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>Artistree</title>
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-		<style type="text/css">
-			#login, #loggedin {
-				display: none;
-			}
-			.text-overflow {
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				width: 500px;
-			}
-		</style>
-		<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-		<link rel="stylesheet" type="text/css" media="screen" href="styles/base.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="styles/layout.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="styles/module.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="styles/reset.css">
-		<link rel="stylesheet" href="styles/icon.css">
-		<link rel="stlyesheet" href="styles/style.css">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./styles/reset.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./styles/base.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./styles/layout.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./styles/module.css" />
 		
 		<!-- Application Templates -->
 		<script id="user-profile-template" type="text/x-handlebars-template">
@@ -63,7 +51,25 @@
 		</script>
 	</head>
 
-	<body>		
+	<body>
+		<!-- Header needs data-content and classes renamed -->
+		<header>
+			<div class="header-content">
+				<a href="/"><img src="http://via.placeholder.com/100x100" alt="logo"></a>
+				<h2>Artistree</h2>
+			</div>
+
+			<nav class="main-nav">
+				<ul>
+			<a href="./">Landing</a>
+			<a href="./home">Home</a>
+			<a href="./about">About Us</a>
+
+				</ul>
+			</nav>
+		</header>
+		
+
 		<main>
 			<div class="container">
 				<div class="page" id="login">
@@ -104,18 +110,10 @@
 			<section id="error-view" class="page">
 				<h2>Oh noes, we messed up!</h2>
 			</section>
-			
-
-
-
 		</main>
 
 		
-		<!-- Need Photos and Bios!!! -->
-		
-	</form>
-</section>	
-</main>
+
 
 		<footer>
 			<!-- <aside class="social-links">
@@ -133,11 +131,16 @@
 		<script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
 		<script src="https://d3js.org/d3.v3.min.js"></script>
 		<!-- Application Resources -->
-		<script src="scripts/controllers/routes.js"></script>
-		<script src="scripts/views/error-view.js"></script>
-		<script src="scripts/view/home.js"></script>
-		<script src="scripts/controllers/auth-template.js"></script>
-		<script src="scripts/tree.js"></script>
+		<script src="./scripts/views/home-view.js"></script>
+		<script src="./scripts/views/about-view.js"></script>
+		<script src="./scripts/views/landing-view.js"></script>
+
+		<script src="./scripts/tree.js"></script>
+		<script src="./scripts/controllers/auth-template.js"></script>
+		<script src="./scripts/controllers/routes.js"></script>
+		
+
+
 		
 		
 	</body>
