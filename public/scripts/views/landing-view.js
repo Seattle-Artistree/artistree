@@ -7,7 +7,6 @@ var app = app || {};
   landingView.init = () => {
     $('#landing-view').show();
     $('#login').show();
-    $('svg').hide();
   };
 
 
