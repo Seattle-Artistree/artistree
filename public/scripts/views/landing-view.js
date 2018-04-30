@@ -4,7 +4,10 @@ var app = app || {};
 
   const landingView = {};
 
-  landingView.init = () => $('#landing-view').show();
+  landingView.init = () => {
+    $('#landing-view').show();
+    $('#login').show();
+  };
 
 
   module.landingView = landingView;
