@@ -5,19 +5,12 @@
 }
 
 .node circle {
-  fill: #fff;
-  stroke: steelblue;
   stroke-width: 1.5px;
-}
-
-#artist_image {
   border-radius: 50%;
-  
 }
 
 .node text {
   font: 12px sans-serif;
-  color: firebrick
 }
 
 .link {

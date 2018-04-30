@@ -8,10 +8,14 @@
     "marked": true,
     "hljs": true
   },
-  "extends": "eslint:recommended",
+  "ecmaFeatures": {
+    "impliedStrict": true, 
+    "modules": true
+  },
   "parserOptions": {
     "ecmaVersion": 6,
-    "ecmaFeatures": {"impliedStrict": true}
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
   },
   "env": {
     "browser": true,
@@ -24,6 +28,8 @@
     "no-template-curly-in-string": "error",
     "no-console": "off",
     "no-undefined": "off",
+    "no-undef": 2,
+    "no-unused-vars": 2,
     "indent": ["error", 2],
     "quotes": ["warn", "single", {"allowTemplateLiterals": true}],
     "no-multi-spaces": ["warn", {"exceptions": { "VariableDeclarator": true }}],
