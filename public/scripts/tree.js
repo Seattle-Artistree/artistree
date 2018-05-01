@@ -282,29 +282,23 @@ function getRelatedArtists(source) {
       var id1 = response.artists[2].id;
       var name1 = response.artists[2].name;
       var image1 = response.artists[2].images[0].url;
-      var children1 = [];
+      var children1 = ["placeholder"];
       var relatedArtist1 = new Artist(id1, name1, image1, children1);
 
       var id2 = response.artists[3].id;
       var name2 = response.artists[3].name;
       var image2 = response.artists[3].images[0].url;
-      var children2 = [];
+      var children2 = ["placeholder"];
       var relatedArtist2 = new Artist(id2, name2, image2, children2);
 
       console.log("source", source);
       console.log(source.children);
+      var testElement = source.children.pop();
       source.children.push(relatedArtist1);
       source.children.push(relatedArtist2);
 
       console.log("first artist", relatedArtist1);
       console.log("second artist", relatedArtist2);
-      // var id = response.id;
-      // var name = response.name;
-      // var image = response.images[0].url;
-      // var topArist = new Artist(id, name, image);
-      // console.log('topArtist', topArist);
-      // allArtists.push(topArist);
-      // userProfilePlaceholder.innerHTML = userProfileTemplate(response);
       $('#login').hide();
       $('#loggedin').show();
     }
