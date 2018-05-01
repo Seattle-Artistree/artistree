@@ -1,5 +1,9 @@
 
 /* classes for D3 nodes */
+svg{
+  padding-top: 25px;
+}
+
 .node {
   cursor: pointer;
 }

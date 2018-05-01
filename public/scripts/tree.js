@@ -31,19 +31,20 @@ artists = (function() {
         refresh_token: refresh_token
       });
       $.ajax({
-        url: 'https://api.spotify.com/v1/artists/5BcAKTbp20cv7tC5VqPFoC',
+        url: 'https://api.spotify.com/v1/me/top/artists?limit=1',
         headers: {
           'Authorization': 'Bearer ' + access_token
         },
         success: function (response) {
           accessToken = access_token;
           console.log("api response", response);
-          var id = response.id;
-          var name = response.name;
-          var image = response.images[0].url;
+          // console.log(image, response.images[0].url);
+          var id = response.items[0].id;
+          var name = response.items[0].name;
+          var image = response.items[0].images[0].url;
           var children = ["placeholder"];
           var topArtist = new Artist(id, name, image, children);
-          //console.log('topArtist', topArtist);
+          // console.log('topArtist', topArtist);
           artists.push(topArtist);
           console.log("artists", artists);
           //var top = allArtists[0];
@@ -203,14 +204,14 @@ function update(source) {
     .attr('dy', '.35em')
     .text(function(d) { return d.name; });
 
-  // node.append('image')
-  //   .attr('id', 'artist_image')
-  //   .style('border-radius', '50%')
-  //   .attr('xlink:href', function(d) { return d.image; })
-  //   .attr('x', -55)
-  //   .attr('y', -55)
-  //   .attr('width', 110)
-  //   .attr('height', 110);
+  node.append('image')
+    .attr('id', 'artist_image')
+    .style('border-radius', '50%')
+    .attr('xlink:href', function(d) { return d.image; })
+    .attr('x', -55)
+    .attr('y', -55)
+    .attr('width', 110)
+    .attr('height', 110);
 
   // Transition nodes to their new position.
   var nodeUpdate = node.transition()
@@ -293,9 +294,12 @@ function getRelatedArtists(source) {
 
       console.log("source", source);
       console.log(source.children);
-      var testElement = source.children.pop();
+      source.children.pop();
       source.children.push(relatedArtist1);
       source.children.push(relatedArtist2);
+
+      // allArtists.pop();
+      // allArtists.push(source);
 
       console.log("first artist", relatedArtist1);
       console.log("second artist", relatedArtist2);
