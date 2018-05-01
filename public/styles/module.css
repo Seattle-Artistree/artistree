@@ -5,13 +5,12 @@
 }
 
 .node circle {
-  fill: #fff;
-  stroke: steelblue;
   stroke-width: 1.5px;
+  border-radius: 50%;
 }
 
 .node text {
-  font: 10px sans-serif;
+  font: 12px sans-serif;
 }
 
 .link {
