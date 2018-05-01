@@ -1,8 +1,9 @@
 //import getAuthInstance from './controllers/auth-template';
 var accessToken = '';
 var artists = [];
+var root;
 
-(function() {
+artists = (function() {
   /**
    * Obtains parameters from the hash of the URL
    * @return Object
@@ -36,13 +37,30 @@ var artists = [];
         },
         success: function (response) {
           accessToken = access_token;
-          console.log(response);
+          console.log("api response", response);
           var id = response.id;
           var name = response.name;
           var image = response.images[0].url;
           var topArtist = new Artist(id, name, image);
-          console.log('topArtist', topArtist);
+          //console.log('topArtist', topArtist);
           artists.push(topArtist);
+          console.log("artists", artists);
+          //var top = allArtists[0];
+          var topperson = artists[0];
+          console.log("first element", artists[0]);
+          //console.log("top", top);
+          root = topperson;
+          console.log('root', root);
+          console.log('root-id', root.id);
+          root.x0 = height / 2;
+          root.y0 = 0;
+
+          // if (!root.children) {
+            
+          //   root.children.forEach(collapse);
+          // }
+          update(root);
+
           userProfilePlaceholder.innerHTML = userProfileTemplate(response);
           $('#login').hide();
           $('#loggedin').show();
@@ -68,6 +86,7 @@ var artists = [];
         });
       });
     }, false);
+    return artists;
   }
 })();
 
@@ -119,13 +138,16 @@ var svg = d3.select('#loggedin').append('svg')
 //   }
 // ];
 
-console.log("artists", artists);
-top = artists[0];
-root = top;
-console.log('root', root);
-console.log('root-id', root.id);
-root.x0 = height / 2;
-root.y0 = 0;
+// console.log("artists", artists);
+// //var top = allArtists[0];
+// var topperson = artists[0];
+// console.log("first element", artists[0]);
+// //console.log("top", top);
+// var root = topperson;
+// console.log('root', root);
+// console.log('root-id', root.id);
+// root.x0 = height / 2;
+// root.y0 = 0;
 
 function collapse(d) {
   if (d.children) {
@@ -135,10 +157,10 @@ function collapse(d) {
   }
 }
 
-if (root.children) {
-  root.children.forEach(collapse);
-}
-update(root);
+// if (root.children) {
+//   root.children.forEach(collapse);
+// }
+// update(root);
 
 d3.select(self.frameElement).style('height', '800px');
 
@@ -154,11 +176,15 @@ function update(source) {
   // Update the nodes…
   var node = svg.selectAll('g.node')
     .data(nodes, function(d) { return d.id || (d.id = ++i); });
-
+  
   //get related artists
-  console.log('node', d3.select(node).datum());
-  console.log('source-id', node.id);
-  getRelatedArtists(node.id);
+  // console.log('node', d3.select(node).datum());
+  // var test = svg.selectAll('g')
+  //               .data(data)
+  //               .enter()
+  //               .append('g').attr('transform', d => `translate(${x(d.name)}, 0)`);
+  console.log('source-id', source);
+  getRelatedArtists(source.id);
 
   // Enter any new nodes at the parent's previous position.
   var nodeEnter = node.enter().append('g')
@@ -251,7 +277,7 @@ function getRelatedArtists(artistId) {
     },
     success: function (response) {
       //accessToken = access_token;
-      console.log(response);
+      console.log("children-response", response.artists[4]);
       // var id = response.id;
       // var name = response.name;
       // var image = response.images[0].url;
