@@ -41,7 +41,8 @@ artists = (function() {
           var id = response.id;
           var name = response.name;
           var image = response.images[0].url;
-          var topArtist = new Artist(id, name, image);
+          var children = ["placeholder"];
+          var topArtist = new Artist(id, name, image, children);
           //console.log('topArtist', topArtist);
           artists.push(topArtist);
           console.log("artists", artists);
@@ -184,7 +185,7 @@ function update(source) {
   //               .enter()
   //               .append('g').attr('transform', d => `translate(${x(d.name)}, 0)`);
   console.log('source-id', source);
-  getRelatedArtists(source.id);
+  getRelatedArtists(source);
 
   // Enter any new nodes at the parent's previous position.
   var nodeEnter = node.enter().append('g')
@@ -268,16 +269,35 @@ function update(source) {
   });
 }
 
-function getRelatedArtists(artistId) {
-  console.log("artistId", artistId);
+function getRelatedArtists(source) {
+  console.log("artistId", source.id);
   $.ajax({
-    url: 'https://api.spotify.com/v1/artists/' + artistId + '/related-artists',
+    url: 'https://api.spotify.com/v1/artists/' + source.id + '/related-artists',
     headers: {
       'Authorization': 'Bearer ' + accessToken
     },
     success: function (response) {
       //accessToken = access_token;
       console.log("children-response", response.artists[4]);
+      var id1 = response.artists[2].id;
+      var name1 = response.artists[2].name;
+      var image1 = response.artists[2].images[0].url;
+      var children1 = [];
+      var relatedArtist1 = new Artist(id1, name1, image1, children1);
+
+      var id2 = response.artists[3].id;
+      var name2 = response.artists[3].name;
+      var image2 = response.artists[3].images[0].url;
+      var children2 = [];
+      var relatedArtist2 = new Artist(id2, name2, image2, children2);
+
+      console.log("source", source);
+      console.log(source.children);
+      source.children.push(relatedArtist1);
+      source.children.push(relatedArtist2);
+
+      console.log("first artist", relatedArtist1);
+      console.log("second artist", relatedArtist2);
       // var id = response.id;
       // var name = response.name;
       // var image = response.images[0].url;
@@ -305,10 +325,10 @@ function click(d) {
   update(d);
 }
 
-function Artist(id, name, image) {
+function Artist(id, name, image, children) {
   this.id = id;
   this.name = name;
   this.image = image;
-  this.children = [];
+  this.children = children;
 }
 //console.log(api_response.items[0].images[0].url);
