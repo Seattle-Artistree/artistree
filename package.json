@@ -4,7 +4,7 @@
   "engines": {
     "node": "8.9.4"
   },
-  "description": "",
+  "description": "As a user, I want to be able to login to my Spotify account and see my top 3 artists that are most played.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

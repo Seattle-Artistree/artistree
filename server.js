@@ -20,10 +20,12 @@ const app = express();
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.error(err));
-
+const DATABASE_URL = new 
 let redirect_uri =
 process.env.REDIRECT_URI ||
 'http://localhost:8888/callback';
+
+
 
 
 // ************ Application Middleware ************

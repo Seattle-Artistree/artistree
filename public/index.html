@@ -117,12 +117,55 @@
 
 			<section id="about-view" class="page">
 					<h2 id="feedback-title">Questions, Comments, Suggestions?</h2>
-					<form class="feedback" id="feedback">
-						<input type="text" id="title" placeholder="title" /><br>
-						<input type="text" id="comment" placeholder="feedback" /><br>
-						<button type="submit">Submit</button>		
-						<!-- Need Photos and Bios!!! -->
-					</form>
+					<div class="imagebg"></div>
+					<div class="row " style="margin-top: 50px">
+					<div class="col-md-6 col-md-offset-3 form-container">
+						<h2>Feedback</h2>
+							<p>Please provide your feedback below:</p>
+							<form role="form" method="post" id="reused_form">
+								<div class="row">
+									<div class="col-sm-12 form-group">
+										<label>How do you rate your overall experience?</label>
+										<p>
+											<label class="radio-inline">
+												<input type="radio" name="experience" id="radio_experience" value="bad"> I hope you get eatten by zombies
+											</label>
+					
+											<label class="radio-inline">
+												<input type="radio" name="experience" id="radio_experience" value="average"> It was ok
+											</label>
+					
+											<label class="radio-inline">
+												<input type="radio" name="experience" id="radio_experience" value="good"> You are Gods
+											</label>
+										</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 form-group">
+										<label for="comments">
+											Comments:</label>
+										<textarea class="form-control" type="textarea" name="comments" id="comments" placeholder="Your Comments" maxlength="6000"
+										 rows="7"></textarea>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 form-group">
+										<button type="submit" class="btn btn-lg btn-warning btn-block">Submit </button>
+									</div>
+								</div>
+					
+							</form>
+							<div id="success_message" style="width:100%; height:100%; display:none; ">
+								<h3>Posted your feedback successfully!</h3>
+							</div>
+							<div id="error_message" style="width:100%; height:100%; display:none; ">
+								<h3>Error</h3>
+								Sorry there was an error sending your form.
+					
+							</div>
+						</div>
+					</div>
 				</section>	
 
 
