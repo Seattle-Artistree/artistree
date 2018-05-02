@@ -1,0 +1,40 @@
+
+/******************* Structural Selectors *******************/
+header {
+  width: 100%;
+  height: 15%;
+  position: absolute;
+}
+main {
+  height: 100%;
+}
+
+.bg {
+  background: url(https://unsplash.com/photos/pPGcNgNB86c) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+section #home-view{
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  /* background: url(https://unsplash.com/photos/pPGcNgNB86c) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover; */
+}
+section #discover-view {
+  height: 100%;
+  width: 100%;
+}
+section #about-view {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+@media only screen and (max-width: 960px) {
+  
+}

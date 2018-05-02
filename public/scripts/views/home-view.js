@@ -2,11 +2,16 @@ var app = app || {};
 
 (module => {
 
-  let homeView = {};
+  const homeView = {};
 
-  homeView.init = () => $('#home-view').show();
+  homeView.init = () => {
+    $('#home-view').show();
+    $('#login').show();
+  };
+
 
   module.homeView = homeView;
 
 })(app);
+
 
