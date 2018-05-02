@@ -332,9 +332,10 @@ function getOtherArtists(toBeSeen, x, totalArtists) {
       Authorization: 'Bearer ' + accessToken
     },
       success: function(response) {
-        var id1 = response.artists[17].id;
-        var name1 = response.artists[17].name;
-        var image1 = response.artists[17].images[0].url;
+        console.log(response);
+        var id1 = response.artists[14].id;
+        var name1 = response.artists[14].name;
+        var image1 = response.artists[14].images[0].url;
         var parent1 = next.id;
         var relatedArtist1 = new Artist(id1, name1, image1, parent1);
         //console.log("ra 1", relatedArtist1);
@@ -356,14 +357,14 @@ function getOtherArtists(toBeSeen, x, totalArtists) {
         // if we haven't fetched 6 artists yet for our tree
         // keep making the recursive call so we can populate
         // out list of artists (which we will turn into a tree later)
-        if (x < 6) {
+        if (x < 10) {
           //console.log("STILL GETTING ARTISTS", toBeSeen);
           return getOtherArtists(toBeSeen, x+1, totalArtists);
         } else {
           console.log("FINAL ARTIST LIST", totalArtists);
           var first = totalArtists[0];
           console.log("first artist", first);
-          var artist_tree = getNestedChildren(totalArtists, first.id);
+          var artist_tree = getNestedChildren(totalArtists, 0);
           console.log("ARTIST_TREE: ", artist_tree);
 
           root = artist_tree[0];
