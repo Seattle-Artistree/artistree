@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Seattle-Artistree/artistree-server#readme",
   "dependencies": {
+    "array-to-tree": "^2.2.1",
     "commonjs": "0.0.1",
     "cookie-parser": "^1.4.3",
     "d3": "^5.1.0",
