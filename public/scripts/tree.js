@@ -1,6 +1,5 @@
 //import getAuthInstance from './controllers/auth-template';
 var accessToken = '';
-var artists = [];
 //var toBeSeen = []; 
 var totalArtists = [];
 var root;
@@ -33,27 +32,30 @@ var root;
         refresh_token: refresh_token
       });
       $.ajax({
-        url: 'https://api.spotify.com/v1/me/top/artists?limit=1',
+        url: 'https://api.spotify.com/v1/artists/6vWDO969PvNqNYHIOW5v0m',
         headers: {
           'Authorization': 'Bearer ' + access_token
         },
         success: function (response) {
           accessToken = access_token;
-          console.log('api response', response);
-          var id = response.items[0].id;
-          var name = response.items[0].name;
-          var image = response.items[0].images[0].url;
+          //console.log('api response', response);
+          var artists = [];
+
+          var id = response.id;
+          var name = response.name;
+          var image = response.images[0].url;
           var parent = 0;
           var topArtist = new Artist(id, name, image, parent);
           artists.push(topArtist);
-          var topperson = artists[0];
+          //var topperson = artists[0];
+
+          var allArtists = [];
+          //var firstArtist = [topperson];
           
-          var firstArtist = new Array();
-          firstArtist.push(topperson);
-          
-          console.log("CALLING GETRELATEDARTISTS WITH TOBESEEN", firstArtist);
-          var myartists = getRelatedArtists(firstArtist);
-          console.log("MY ARTISTS", myartists);
+          console.log("FIRST ARTIST", artists);
+          console.log("CALLING GETRELATEDARTISTS WITH FIRST ARTIST", allArtists);
+          getOtherArtists(artists, 1, allArtists)
+
           // var deferred = getRelatedArtists(totalArtists, toBeSeen, 0).defer();
 
           // console.log("DEFERRED", deferred);
@@ -62,12 +64,7 @@ var root;
           //   console.log("RELATED ARTISTS CALLS FINISHED");
           // });
 
-
-          root = topperson;
-          root.x0 = height / 2;
-          root.y0 = 0;
-
-          test(root);
+          //var toproot = artists[0];
 
           // if (!root.children) {
           //   root.children.forEach(collapse);
@@ -244,7 +241,7 @@ function update(source) {
   });
 }
 
-function unflatten(totalArtists) {
+function unflatten(arr) {
   var tree = [],
     mappedArr = {},
     arrElem,
@@ -301,63 +298,123 @@ function unflatten(totalArtists) {
 // // after "created" in vue
 // this.allEmployees = this.getAllEmployees(); // returns "promise"
 
-function getRelatedArtists(toBeSeen) {
-  var totalArtists = [];
-  var x = 1
-  //console.log("EXITING FUNCTION HERE");
-  console.log("artists to be seen", toBeSeen.length);
+function getOtherArtists(toBeSeen, x, totalArtists) {
+  //console.log("Artists to be seen: ", toBeSeen);
+  //console.log("Artists in our list: ", totalArtists);
 
-  console.log("total artists", totalArtists);
-
-  
-
-  // console.log("NEXT ID", next.id);
-
-  const getThoseArtists = function(toBeSeen, x) {
-    var next = toBeSeen.pop();
-    console.log("INSIDE GET THOSE ARTISTS");
-    $.ajax({
+  var next = toBeSeen.pop();
+  console.log("FETCHING ARTISTS FOR :", next.id);
+  $.ajax({
     url: 'https://api.spotify.com/v1/artists/' + next.id + '/related-artists',
     headers: {
       Authorization: 'Bearer ' + accessToken
     },
       success: function(response) {
-        var id1 = response.artists[2].id;
-        var name1 = response.artists[2].name;
-        var image1 = response.artists[2].images[0].url;
+        var id1 = response.artists[17].id;
+        var name1 = response.artists[17].name;
+        var image1 = response.artists[17].images[0].url;
         var parent1 = next.id;
         var relatedArtist1 = new Artist(id1, name1, image1, parent1);
+        //console.log("ra 1", relatedArtist1);
 
-        var id2 = response.artists[3].id;
-        var name2 = response.artists[3].name;
-        var image2 = response.artists[3].images[0].url;
+        var id2 = response.artists[9].id;
+        var name2 = response.artists[9].name;
+        var image2 = response.artists[9].images[0].url;
         var parent2 = next.id;
         var relatedArtist2 = new Artist(id2, name2, image2, parent2);
+        //console.log("ra 2", relatedArtist2);
 
-        toBeSeen = toBeSeen.concat(relatedArtist1);
-        toBeSeen = toBeSeen.concat(relatedArtist2);
+        toBeSeen.push(relatedArtist1, relatedArtist2);
+        //toBeSeen.push(relatedArtist2);
 
         // update total artist list with the artist we just got
         // children for
-        totalArtists = totalArtists.concat(next);
+        totalArtists.push(next);
 
         // if we haven't fetched 6 artists yet for our tree
         // keep making the recursive call so we can populate
         // out list of artists (which we will turn into a tree later)
         if (x < 6) {
-          console.log("STILL GETTING ARTISTS", toBeSeen);
-          return getThoseArtists(toBeSeen, x+1);
+          //console.log("STILL GETTING ARTISTS", toBeSeen);
+          return getOtherArtists(toBeSeen, x+1, totalArtists);
         } else {
+          console.log("FINAL ARTIST LIST", totalArtists);
+          var artist_tree = unflatten(totalArtists);
+          console.log("ARTIST_TREE: ", artist_tree);
+
+          root = artist_tree[0];
+          root.x0 = height / 2;
+          root.y0 = 0;
+
+          test(root);
           return totalArtists;
         }
-        getRelatedArtists(toBeSeen, x+1);
-        $('#login').hide();
-        $('#loggedin').show();
+        //getRelatedArtists(toBeSeen, x+1);
+        // $('#login').hide();
+        // $('#loggedin').show();
       }
     });
-  }
-  return getThoseArtists(toBeSeen, 1);
 }
+
+// function getRelatedArtists(toBeSeen) {
+//   var totalArtists = [];
+//   var x = 1
+//   //console.log("EXITING FUNCTION HERE");
+//   console.log("artists to be seen", toBeSeen.length);
+
+//   console.log("total artists", totalArtists);
+
+  
+
+//   // console.log("NEXT ID", next.id);
+
+//   function getThoseArtists(toBeSeen, x) {
+//     var next = toBeSeen.pop();
+//     console.log("INSIDE GET THOSE ARTISTS");
+//     $.ajax({
+//       url: 'https://api.spotify.com/v1/artists/' + next.id + '/related-artists',
+//       headers: {
+//         Authorization: 'Bearer ' + accessToken
+//       },
+//       async: false,
+//       success: function(response) {
+//         var id1 = response.artists[2].id;
+//         var name1 = response.artists[2].name;
+//         var image1 = response.artists[2].images[0].url;
+//         var parent1 = next.id;
+//         var relatedArtist1 = new Artist(id1, name1, image1, parent1);
+
+//         var id2 = response.artists[3].id;
+//         var name2 = response.artists[3].name;
+//         var image2 = response.artists[3].images[0].url;
+//         var parent2 = next.id;
+//         var relatedArtist2 = new Artist(id2, name2, image2, parent2);
+
+//         toBeSeen = toBeSeen.concat(relatedArtist1);
+//         toBeSeen = toBeSeen.concat(relatedArtist2);
+
+//         // update total artist list with the artist we just got
+//         // children for
+//         totalArtists = totalArtists.concat(next);
+
+//         // if we haven't fetched 6 artists yet for our tree
+//         // keep making the recursive call so we can populate
+//         // out list of artists (which we will turn into a tree later)
+//         if (x < 6) {
+//           console.log("STILL GETTING ARTISTS", toBeSeen);
+//           return getThoseArtists(toBeSeen, x+1);
+//         } else {
+//           console.log("FINAL ARTIST LIST", totalArtists);
+//           return totalArtists;
+//         }
+//         //getRelatedArtists(toBeSeen, x+1);
+//         $('#login').hide();
+//         $('#loggedin').show();
+//       }
+//     });
+//   }
+//   return getThoseArtists(toBeSeen, 1);
+// }
 
 
 // Toggle children on click.
@@ -374,10 +431,10 @@ function click(d) {
   //update(d);
 }
 
-function Artist(id, name, image, parent) {
+function Artist(id, name, image, parentId) {
   this.id = id;
   this.name = name;
   this.image = image;
-  this.parent = parent;
+  this.parentId = parentId;
 }
 //console.log(api_response.items[0].images[0].url);
