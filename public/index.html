@@ -34,13 +34,13 @@
 			</div> -->
 		</script>
 		
-		<script id="oauth-template" type="text/x-handlebars-template">
+		<!-- <script id="oauth-template" type="text/x-handlebars-template">
 			<h2>oAuth info</h2>
 			<dl class="dl-horizontal">
 				<dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
 				<dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
 			</dl>
-		</script>
+		</script> -->
 		
 		<script type="text/x-handlebars-template" id="error-template">
 			<h3>Oops, something went wrong!</h3>
@@ -52,19 +52,23 @@
 		<!-- Header content goes here with nav bar-->
 			<header>
 				<!-- The navigation bar goes here -->
+				<button class="js-menu menu" type="button">
+					<span class="bar"></span>
+				</button>
+				
 				<nav>
-					<img src="http://placehold.it/200x70/0000000"> <!-- This is the image logo-->
-				<ul>
-					<li><a href="./"></a></li><!--First Nav Item-->
-					<li><a href="./home">Home</a></li><!--Second Nav Item-->
-					<li><a href="./about">About Us</a></li><!--Third Nav Item-->
-				</ul>
-				</nav> 
+					<ul>
+						<li href="./">Home</li>
+						<li href="./discover">Discover</li>
+						<li href="./about">About</li>
+					</ul>
+				</nav>
+
 			</header>
 				<!-- The header/navigation bar ends here -->
 				<main>
-					<section id="landing-view" class="page">
-						<h1>Artistree</h1>
+					<section id="home-view" class="page">
+						<!-- <h1>Artistree</h1>
 							<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi"</p><br>
 							<div class="container">
 								<div class="page" id="login">
@@ -79,11 +83,11 @@
 							</div>
 							<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
 							</div>
-							</div>
+							</div> -->
 
 					</section>
 
-			<section id="home-view" class="page">
+			<section id="discover-view" class="page">
 					<h1>Home Page</h1>
 					<p>This is the home view.</p>
 				</section>
@@ -112,16 +116,13 @@
 		<script src="https://d3js.org/d3.v3.min.js"></script>
 		<!-- Application Resources -->
 		<script src="./scripts/views/home-view.js"></script>
+		<script src="./scripts/views/discover-view.js"></script>
 		<script src="./scripts/views/about-view.js"></script>
-		<script src="./scripts/views/landing-view.js"></script>
 
 		<script src="./scripts/tree.js"></script>
 		<script type="module" src="./scripts/controllers/auth-template.js"></script>
 		<script src="./scripts/controllers/routes.js"></script>
-		
-
-
-		
+		<script src="./styles/styles.js"></script>
 		
 	</body>
 </html>
