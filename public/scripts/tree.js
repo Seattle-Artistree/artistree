@@ -1,4 +1,3 @@
-//import getAuthInstance from './controllers/auth-template';
 var accessToken = '';
 //var toBeSeen = []; 
 var totalArtists = [];
@@ -44,8 +43,8 @@ var root;
           var id = response.id;
           var name = response.name;
           var image = response.images[0].url;
-          var parent = 0;
-          var topArtist = new Artist(id, name, image, parent);
+          var parent_id = 0;
+          var topArtist = new Artist(id, name, image, parent_id);
           artists.push(topArtist);
           //var topperson = artists[0];
 
@@ -241,33 +240,38 @@ function update(source) {
   });
 }
 
-function unflatten(arr) {
-  var tree = [],
-    mappedArr = {},
-    arrElem,
-    mappedElem;
+function unflatten(array, parent) {
+  var tree = {};
+  parent = typeof parent !== 'undefined' ? parent : {id: 0};
 
-  // First map the nodes of the array to an object -> create a hash table.
-  for (var i = 0, len = arr.length; i < len; i++) {
-    arrElem = arr[i];
-    mappedArr[arrElem.id] = arrElem;
-    mappedArr[arrElem.id]['children'] = [];
-  }
+  console.log("PARENT", parent);
 
-  for (var id in mappedArr) {
-    if (mappedArr.hasOwnProperty(id)) {
-      mappedElem = mappedArr[id];
-      // If the element is not at the root level, add it to its parent array of children.
-      if (mappedElem.parentid) {
-        mappedArr[mappedElem['parentid']]['children'].push(mappedElem);
-      } else {
-        // If the element is at the root level, add it to first level elements array.
-        tree.push(mappedElem);
-      }
+  var childrenArray = array.filter(function (child) {
+    console.log("forming children array");
+    return child.parentId == parent.id;
+  });
+
+  console.log("children array", childrenArray);
+
+  if (childrenArray.length > 0) {
+    var childrenObject = {};
+    // Transform children into a hash/object keyed on token
+    childrenArray.forEach(function (child) {
+      childrenObject[child.id] = child;
+    });
+    if (parent.id == 0) {
+      tree = childrenObject;
+    } else {
+      parent['children'] = childrenObject;
+      console.log("parent children", parent['children']);
     }
+    childrenArray.forEach(function (child) {
+      unflatten(array, child);
+    })
   }
+
   return tree;
-}
+};
 
 
 // getAllEmployees: function() {
@@ -297,6 +301,24 @@ function unflatten(arr) {
 
 // // after "created" in vue
 // this.allEmployees = this.getAllEmployees(); // returns "promise"
+
+function getNestedChildren(arr, parent_id) {
+  var out = []
+  for(var i in arr) {
+      console.log("element", arr[i]);
+      console.log("parent_id", parent_id)
+      if(arr[i].parent_id == parent_id) {
+          var children = getNestedChildren(arr, arr[i].id)
+
+          if(children.length) {
+              arr[i].children = children
+          }
+          console.log("out", out);
+          out.push(arr[i])
+      }
+  }
+  return out
+}
 
 function getOtherArtists(toBeSeen, x, totalArtists) {
   //console.log("Artists to be seen: ", toBeSeen);
@@ -339,7 +361,9 @@ function getOtherArtists(toBeSeen, x, totalArtists) {
           return getOtherArtists(toBeSeen, x+1, totalArtists);
         } else {
           console.log("FINAL ARTIST LIST", totalArtists);
-          var artist_tree = unflatten(totalArtists);
+          var first = totalArtists[0];
+          console.log("first artist", first);
+          var artist_tree = getNestedChildren(totalArtists, first.id);
           console.log("ARTIST_TREE: ", artist_tree);
 
           root = artist_tree[0];
@@ -431,10 +455,10 @@ function click(d) {
   //update(d);
 }
 
-function Artist(id, name, image, parentId) {
+function Artist(id, name, image, parent_id) {
   this.id = id;
   this.name = name;
   this.image = image;
-  this.parentId = parentId;
+  this.parent_id = parent_id;
 }
 //console.log(api_response.items[0].images[0].url);
