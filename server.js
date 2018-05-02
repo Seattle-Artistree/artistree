@@ -20,8 +20,8 @@ const app = express();
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.error(err));
-const DATABASE_URL = new 
-let redirect_uri =
+// const DATABASE_URL = new 
+// let redirect_uri =
 process.env.REDIRECT_URI ||
 'http://localhost:8888/callback';
 
@@ -174,6 +174,16 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/test', (req, res) => res.send('It\'s working!'));
 
+// post to the database
+// app.post('/feedback', (request, response) => {
+//   client.query(
+//     'INSERT INTO feedback(feedback, "feedback") VALUES($1, $2) ON CONFLICT DO NOTHING',
+//     [request.body.feedback, request.body.feedback],
+//     function (err) {
+//       if (err) console.error(err)
+//     }
+//   )
+
 // let url = 'https://api.spotify.com/v1/me/top/artists/';
 
 // app.get(url, (req, res) => console.log(res));
@@ -181,3 +191,5 @@ app.get('/test', (req, res) => res.send('It\'s working!'));
 
 console.log('Listening on 8888');
 app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
+
+// //store feedback ??

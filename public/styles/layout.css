@@ -1,34 +1,36 @@
-.header-content {
-  position: relative;
+
+/******************* Structural Selectors *******************/
+header {
+  width: 100%;
+  height: 15%;
+  position: absolute;
+}
+main {
+  height: 100%;
 }
 
-header img {
-  max-width: 10%;
-  display: inline-block;
-  padding-left: 5%;
+.bg {
+  background: url(./assets/landing.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
 }
 
-header h1 {
-  display: inline-block;
-  font-size: 5vw;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 50%;
-  height: 30%;
-  margin: auto;
+section #home-view{
+  height: 100%;
+  width: 100%;
+  position: fixed;
 }
-#login{
-  display: inline-block;
-  font-size: 7vw;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 50%;
-  height: 30%;
-  margin: auto;
+section #discover-view {
+  height: 100%;
+  width: 100%;
+}
+section #about-view {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+@media only screen and (max-width: 960px) {
+  
 }

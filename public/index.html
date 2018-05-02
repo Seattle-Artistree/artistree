@@ -6,37 +6,16 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>Artistree</title>
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-		<style type="text/css">
-			#login, #loggedin {
-				display: none;
-			}
-			.text-overflow {
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				width: 500px;
-			}
-		</style>
-		<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-		<link rel="stylesheet" type="text/css" media="screen" href="styles/base.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="styles/layout.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="styles/module.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="styles/reset.css">
-		<link rel="stylesheet" href="styles/icon.css">
-		<link rel="stlyesheet" href="styles/style.css">
-			
-	<!-- Application Templates -->
-
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./styles/reset.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./styles/base.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./styles/layout.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./styles/module.css" />
-		
+		<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 		<!-- Application Templates -->
 		<script id="user-profile-template" type="text/x-handlebars-template">
 			<h1>Logged in as {{display_name}}</h1>
-			<!-- <div class="media">
+			<div class="media">
 				<div class="pull-left">
 					<img class="media-object" width="150" src="{{images.0.url}}" />
 				</div>
@@ -49,9 +28,9 @@
 						<dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
 						<dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
 						<dt>Country</dt><dd>{{country}}</dd> -->
-					<!-- </dl>
+					</dl>
 				</div>
-			</div> -->
+			</div>
 		</script>
 
 
@@ -63,7 +42,7 @@
 			</dl>
 
 		</script>
-		
+
 		<script type="text/x-handlebars-template" id="error-template">
 			<h3>Oops, something went wrong!</h3>
 			<p>{{status}}: {{statusText}}</p>
@@ -71,98 +50,57 @@
 	</head>
 
 	<body>
-		<!-- Header needs data-content and classes renamed -->
-		<header>
-			<div class="header-content">
-				<a href="/"><img src="http://via.placeholder.com/100x100" alt="logo"></a>
-				<h2>Artistree</h2>
-			</div>
-
-			<nav class="main-nav">
+		<header>	<!-- The navigation bar goes here -->
+			<button class="js-menu menu" type="button">
+				<span class="bar"></span>
+			</button>				
+			<nav>
 				<ul>
-			<a href="./">Landing</a>
-			<a href="./home">Home</a>
-			<a href="./about">About Us</a>
-
+					<li><a href="./">Home</a></li>
+					<li><a href="./discover">Discover</a></li>
+					<li><a href="./about">About</a></li>
 				</ul>
 			</nav>
-		</header>
-		
+		</header>	<!-- The header/navigation bar ends here -->
 
 		<main>
-			<div class="container">
-				<div class="page" id="login">
-					<h1>Welcome to Artistree</h1>
-					<a href="/login.html" class="btn btn-primary">Log in with Spotify</a>
-				</div>
-
-				<div id="loggedin">
-					<div id="user-profile">
-					</div>
-					<div id="oauth">
-					</div>
-					<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
-				</div>
-			</div>
-
 			<section id="home-view" class="page">
-				<h1>Home Page</h1>
-				<p>This is the home view.</p>
+				<div class="bg">
+					<div id="title-wrapper">
+						<h1>Artistree</h1>
+						<h3>We'll have an awesome call to action that will melt your face off soon!</h3><br>
+						<div class="page" id="login">
+							<a href="/login" class="btn btn-primary">Log in with Spotify</a>
+						</div>
+						<div id="loggedin">
+							<div id="user-profile"></div>
+							<div id="oauth"></div>
+							<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+						</div>
+					</div>
+				</div>
 			</section>
-			
-			<section id="landing-view" class="page">
-				<h1>Landing View</h1>
-				<p>This is the landing view.</p>
+
+			<section id="discover-view" class="page">
+				<h2>Discover</h2>
+				<p>Find new artists based off your library.</p>
 			</section>
 
 			<section id="about-view" class="page">
-					<h2 id="feedback-title">Questions, Comments, Suggestions?</h2>
-							<form role="form" method="post" id="reused_form">
-								<div class="row">
-									<div class="form-group">
-										<label for="comments">Enter Below:</label>
-										<textarea class="form-control" type="textarea" name="comments" id="comments" placeholder="Your Comments" maxlength="6000"
-										 rows="7"></textarea>
-									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<button type="submit" class="btn">Submit </button>
-									</div>
-								</div>
-					
-							</form>
-							<div id="success_message" style="width:100%; height:100%; display:none; ">
-								<h3>Posted your feedback successfully!</h3>
-							</div>
-							<div id="error_message" style="width:100%; height:100%; display:none; ">
-								<h3>Error</h3>
-								Sorry there was an error sending your form.
-					
-							</div>
-						</div>
-					</div>
-				</section>	
-
+				<h2 id="feedback-title">Questions, Comments, Suggestions?</h2>
+				<form class="feedback" id="feedback">
+					<input type="text" id="title" placeholder="title" /><br>
+					<input type="text" id="comment" placeholder="feedback" /><br>
+					<button type="submit">Submit</button>		
+					<!-- Need Photos and Bios!!! -->
+				</form>
+			</section>	
 
 			<section id="error-view" class="page">
 				<h2>Oh noes, we messed up!</h2>
 			</section>
 		</main>
-
-		
-
-
-		<footer>
-			<aside class="social-links">
-				<ul>
-					<li><i class="icon-bars"><a href="public/styles/font/bars.png"></a></i></li>
-					<li><i class="icon-github"><a href="styles/font"></a></i></li>
-					<li><i class="icon-linkedin"><a href=""></a></i></li></ul>
-			</aside>
-			<h1>&copy 2018</h1>
-		</footer>
-		
+	
 		<!-- External CDN Resources -->
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
@@ -173,13 +111,12 @@
 		<script src="scripts/controllers/auth-template.js"></script>
 		<script src="scripts/tree.js"></script>
 		<script src="./scripts/views/home-view.js"></script>
+		<script src="./scripts/views/discover-view.js"></script>
 		<script src="./scripts/views/about-view.js"></script>
-		<script src="./scripts/views/landing-view.js"></script>
-		<script src="./scripts/tree.js"></script>
+
+		<!-- <script src="./scripts/tree.js"></script> -->
 		<script type="module" src="./scripts/controllers/auth-template.js"></script>
 		<script src="./scripts/controllers/routes.js"></script>
-		
-		
-		
+		<script src="./styles/styles.js"></script>
 	</body>
 </html>
