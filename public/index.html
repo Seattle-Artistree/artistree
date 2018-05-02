@@ -6,7 +6,6 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>Artistree</title>
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./styles/reset.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./styles/base.css" />
@@ -42,8 +41,6 @@
 			</dl>
 		</script>
 
-		
-		
 		<script type="text/x-handlebars-template" id="error-template">
 			<h3>Oops, something went wrong!</h3>
 			<p>{{status}}: {{statusText}}</p>
@@ -51,8 +48,7 @@
 	</head>
 
 	<body>
-		<header>
-			<!-- The navigation bar goes here -->
+		<header>	<!-- The navigation bar goes here -->
 			<button class="js-menu menu" type="button">
 				<span class="bar"></span>
 			</button>				
@@ -60,39 +56,35 @@
 				<ul>
 					<li><a href="./">Home</a></li>
 					<li><a href="./discover">Discover</a></li>
-					<li></li><a href="./about">About</a></li>
+					<li><a href="./about">About</a></li>
 				</ul>
 			</nav>
+		</header>	<!-- The header/navigation bar ends here -->
 
-		</header>
-				<!-- The header/navigation bar ends here -->
 		<main>
 			<section id="home-view" class="page">
-					
-				<div class="container">
-					<h1>Artistree</h1>
-					<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam"</p><br>
-					<div class="page" id="login">
-						<a href="/login" class="btn btn-primary">Log in with Spotify</a>
+				<div class="bg">
+					<div id="title-wrapper">
+						<h1>Artistree</h1>
+						<h3>We'll have an awesome call to action that will melt your face off soon!</h3><br>
+						<div class="page" id="login">
+							<a href="/login" class="btn btn-primary">Log in with Spotify</a>
+						</div>
+						<div id="loggedin">
+							<div id="user-profile"></div>
+							<div id="oauth"></div>
+							<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+						</div>
 					</div>
-		
-				<div id="loggedin">
-				<div id="user-profile">
 				</div>
-				<div id="oauth">
-				</div>
-				<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
-				</div>
-				</div>
-
 			</section>
 
-		<section id="discover-view" class="page">
-				<h1>Home Page</h1>
-				<p>This is the home view.</p>
+			<section id="discover-view" class="page">
+				<h2>Discover</h2>
+				<p>Find new artists based off your library.</p>
 			</section>
 
-		<section id="about-view" class="page">
+			<section id="about-view" class="page">
 				<h2 id="feedback-title">Questions, Comments, Suggestions?</h2>
 				<form class="feedback" id="feedback">
 					<input type="text" id="title" placeholder="title" /><br>
@@ -102,13 +94,11 @@
 				</form>
 			</section>	
 
-
-		<section id="error-view" class="page">
-			<h2>Oh noes, we messed up!</h2>
-		</section>
-	</main>
-
-		
+			<section id="error-view" class="page">
+				<h2>Oh noes, we messed up!</h2>
+			</section>
+		</main>
+	
 		<!-- External CDN Resources -->
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
@@ -123,6 +113,5 @@
 		<script type="module" src="./scripts/controllers/auth-template.js"></script>
 		<script src="./scripts/controllers/routes.js"></script>
 		<script src="./styles/styles.js"></script>
-		
 	</body>
 </html>

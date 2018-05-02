@@ -1,18 +1,14 @@
+
 /******************* Hamburger Menu *******************/
-
-
-html {
-  font-size: 10px;
-}
 .menu {
   transition: 0.1s transform linear;
   position: relative;
   background: 0;
   float: right;
   margin: 2rem;
-  /* height: 2.7rem; */
+  height: 2.7rem;
   width: 3.5rem;
-  z-index: 1;
+  z-index: 3;
   outline: 0;
   padding: 0;
   border: 0;
@@ -62,17 +58,26 @@ html {
   transform: linear 0.2s;
 }
 nav {
+  z-index: 2;
   right: 0;
   width: 175px;
   height: 100%;
-  background: rgb(196, 111, 17);
+  background: rgb(9, 78, 69);
+  text-align: left;
+  color:ghostwhite;
   position: fixed;
-  transform: translateX(250px);
+  transform: translateX(175px);
   transition: transform 0.6s cubic-bezier(0.56, 0.1, 0.34, 0.91);
   padding-top: 6.2rem;
+  -webkit-box-shadow: 0 -3px 6px 3px #111;
+     -moz-box-shadow: 0 -3px 6px 3px #111;
+          box-shadow: 0 -3px 6px 3px #111;
 }
 .menu-open nav {
   transform: translateX(0);
+  -webkit-box-shadow: 0 -3px 6px 3px #111;
+     -moz-box-shadow: 0 -3px 6px 3px #111;
+          box-shadow: 0 -3px 6px 3px #111;
 }
 nav ul {
   margin: 0;
@@ -81,22 +86,33 @@ nav ul {
 }
 nav ul li {
   color: ghostwhite;
-  padding: 20px 10px;
-  font-size: 2rem;
-  transition: opacity 0.5s ease-in-out;
-  -moz-transition: opacity 0.5s ease-in-out;
-  -webkit-transition: opacity 0.5s ease-in-out;
+  padding: 1rem 1.5rem;
+  font-size: 1.8rem;
+  -o-transition:color .2s ease-out, background .2s ease-in;
+  -ms-transition:color .2s ease-out, background .2s ease-in;
+  -moz-transition:color .2s ease-out, background .2s ease-in;
+  -webkit-transition:color .2s ease-out, background .2s ease-in;
 }
 nav ul li:hover {
-  background: rgb(41, 11, 21); 
-  transition: opacity 0.5s ease-in-out;
-  -moz-transition: opacity 0.5s ease-in-out;
-  -webkit-transition: opacity 0.5s ease-in-out;
+  background: #42AD56; 
+  -o-transition:color .5s ease-out, background .2s ease-in;
+  -ms-transition:color .5s ease-out, background .2s ease-in;
+  -moz-transition:color .5s ease-out, background .2s ease-in;
+  -webkit-transition:color .5s ease-out, background .2s ease-in;
 }
 
+/******************* Home Classes *******************/
+div #title-wrapper {
+  position: absolute;
+  width: 100%;
+  margin: 25% auto;
+  margin-top: 8rem;
+}
+div #title-wrapper h3 {
+  padding: 0 1rem;
+}
 
-
-/******************* Classes for D3 nodes *******************/
+/******************* D3 Classes *******************/
 .node {
   cursor: pointer;
 }
@@ -116,28 +132,6 @@ nav ul li:hover {
   stroke-width: 1.5px;
 }
 
-h1 {
-  font-size: 4rem;
-
-}
-
-a { 
-  text-decoration: none;
-  color:#290b15;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* part of spotify login */
 #login, #loggedin {
@@ -150,5 +144,18 @@ a {
   width: 500px;
 }
 
+/******************* Desktop View!!! *******************/
+@media only screen and (min-width: 960px) {
+  div #title-wrapper {
+    margin-top: 14rem;
+  }
 
-
+  nav {
+    width: 300px;
+    transform: translateX(300px);
+  }
+  nav ul li {
+    color: ghostwhite;
+    padding: 1rem 2.5rem;
+  }
+}
