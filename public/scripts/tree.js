@@ -43,8 +43,8 @@ var root;
           var id = response.id;
           var name = response.name;
           var image = response.images[0].url;
-          var parent_id = 0;
-          var topArtist = {'id': id, 'name': name, 'image': image, 'parent_id': parent_id};
+          var parentid = 0;
+          var topArtist = {'id': id, 'name': name, 'image': image, 'parentid': parentid};
           artists.push(topArtist);
           //var topperson = artists[0];
 
@@ -269,23 +269,23 @@ function update(source) {
 // // after "created" in vue
 // this.allEmployees = this.getAllEmployees(); // returns "promise"
 
-function getNestedChildren(arr, parent_id) {
-  var out = []
-  for(var i in arr) {
-      console.log("element", arr[i]);
-      console.log("parent_id", parent_id)
-      if(arr[i].parent_id == parent_id) {
-          var children = getNestedChildren(arr, arr[i].id)
+// function getNestedChildren(arr, parent_id) {
+//   var out = []
+//   for(var i in arr) {
+//       console.log("element", arr[i]);
+//       console.log("parent_id", parent_id)
+//       if(arr[i].parent_id == parent_id) {
+//           var children = getNestedChildren(arr, arr[i].id)
 
-          if(children.length) {
-              arr[i].children = children
-          }
-          console.log("out", out);
-          out.push(arr[i])
-      }
-  }
-  return out
-}
+//           if(children.length) {
+//               arr[i].children = children
+//           }
+//           console.log("out", out);
+//           out.push(arr[i])
+//       }
+//   }
+//   return out
+// }
 
 function treeify(list, idAttr, parentAttr, childrenAttr) {
   if (!idAttr) idAttr = 'id';
@@ -326,6 +326,7 @@ var tree = [],
 for(var i = 0, len = arr.length; i < len; i++) {
   arrElem = arr[i];
   mappedArr[arrElem.id] = arrElem;
+  console.log("ARRAYELEM", mappedArr[arrElem.id]);
   mappedArr[arrElem.id]['children'] = [];
 }
 
@@ -334,8 +335,12 @@ for (var id in mappedArr) {
   if (mappedArr.hasOwnProperty(id)) {
     mappedElem = mappedArr[id];
     // If the element is not at the root level, add it to its parent array of children.
-    if (mappedElem.parentid) {
-      mappedArr[mappedElem['parentid']]['children'].push(mappedElem);
+    if (mappedElem.parentid && mappedElem.parentid != 0) {
+      console.log("MAPPED PARENT", mappedElem.parentid);
+      //var mappedParent = mappedArr[mappedElem['parentid']];
+      //console.log(mappedParent);
+      console.log(mappedArr[mappedElem.parentid]);
+      mappedArr[[mappedElem.parentid]]['children'].push(mappedElem);
     }
     // If the element is at the root level, add it to first level elements array.
     else {
@@ -346,7 +351,7 @@ for (var id in mappedArr) {
 return tree;
 }
 
-console.log("TESTING UNFLATTEN", unflatten(arr));
+//console.log("TESTING UNFLATTEN", unflatten(arr));
 
 function getOtherArtists(toBeSeen, x, totalArtists) {
   //console.log("Artists to be seen: ", toBeSeen);
@@ -364,15 +369,15 @@ function getOtherArtists(toBeSeen, x, totalArtists) {
         var id1 = response.artists[14].id;
         var name1 = response.artists[14].name;
         var image1 = response.artists[14].images[0].url;
-        var parent1 = next.id;
-        var relatedArtist1 = {'id': id1, 'name': name1, 'image': image1, 'parent_id': parent1};
+        //var parent1 = next.id;
+        var relatedArtist1 = {'id': id1, 'name': name1, 'image': image1, 'parentid': next.id};
         //console.log("ra 1", relatedArtist1);
 
         var id2 = response.artists[9].id;
         var name2 = response.artists[9].name;
         var image2 = response.artists[9].images[0].url;
-        var parent2 = next.id;
-        var relatedArtist2 = {'id': id2, 'name': name2, 'image': image2, 'parent_id': parent2};
+        //var parent2 = next.id;
+        var relatedArtist2 = {'id': id2, 'name': name2, 'image': image2, 'parentid': next.id};
         //console.log("ra 2", relatedArtist2);
 
         toBeSeen.push(relatedArtist1, relatedArtist2);
@@ -392,7 +397,7 @@ function getOtherArtists(toBeSeen, x, totalArtists) {
           console.log("FINAL ARTIST LIST", totalArtists);
           var first = totalArtists[0];
           console.log("first artist", first);
-          var artist_tree = treeify(totalArtists);
+          var artist_tree = unflatten(totalArtists);
           console.log("ARTIST_TREE: ", artist_tree);
 
           root = artist_tree[0];
@@ -484,10 +489,10 @@ function click(d) {
   //update(d);
 }
 
-function Artist(id, name, image, parent_id) {
+function Artist(id, name, image, parentid) {
   this.id = id;
   this.name = name;
   this.image = image;
-  this.parent_id = parent_id;
+  this.parentid = parentid;
 }
 //console.log(api_response.items[0].images[0].url);
