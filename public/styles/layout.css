@@ -10,7 +10,7 @@ main {
 }
 
 .bg {
-  background: url(https://unsplash.com/photos/pPGcNgNB86c) no-repeat center center fixed; 
+  background: url(./assets/landing.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -20,10 +20,6 @@ section #home-view{
   height: 100%;
   width: 100%;
   position: fixed;
-  /* background: url(https://unsplash.com/photos/pPGcNgNB86c) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover; */
 }
 section #discover-view {
   height: 100%;
