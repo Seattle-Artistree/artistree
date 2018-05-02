@@ -12,11 +12,11 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="./styles/base.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./styles/layout.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="./styles/module.css" />
-		
+		<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 		<!-- Application Templates -->
 		<script id="user-profile-template" type="text/x-handlebars-template">
 			<h1>Logged in as {{display_name}}</h1>
-			<!-- <div class="media">
+			<div class="media">
 				<div class="pull-left">
 					<img class="media-object" width="150" src="{{images.0.url}}" />
 				</div>
@@ -29,18 +29,20 @@
 						<dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
 						<dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
 						<dt>Country</dt><dd>{{country}}</dd> -->
-					<!-- </dl>
+					</dl>
 				</div>
-			</div> -->
+			</div>
 		</script>
 		
-		<!-- <script id="oauth-template" type="text/x-handlebars-template">
+		<script id="oauth-template" type="text/x-handlebars-template">
 			<h2>oAuth info</h2>
 			<dl class="dl-horizontal">
 				<dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
 				<dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
 			</dl>
-		</script> -->
+		</script>
+
+		
 		
 		<script type="text/x-handlebars-template" id="error-template">
 			<h3>Oops, something went wrong!</h3>
@@ -49,64 +51,62 @@
 	</head>
 
 	<body>
-		<!-- Header content goes here with nav bar-->
-			<header>
-				<!-- The navigation bar goes here -->
-				<button class="js-menu menu" type="button">
-					<span class="bar"></span>
-				</button>
-				
-				<nav>
-					<ul>
-						<li href="./">Home</li>
-						<li href="./discover">Discover</li>
-						<li href="./about">About</li>
-					</ul>
-				</nav>
+		<header>
+			<!-- The navigation bar goes here -->
+			<button class="js-menu menu" type="button">
+				<span class="bar"></span>
+			</button>				
+			<nav>
+				<ul>
+					<li><a href="./">Home</a></li>
+					<li><a href="./discover">Discover</a></li>
+					<li></li><a href="./about">About</a></li>
+				</ul>
+			</nav>
 
-			</header>
+		</header>
 				<!-- The header/navigation bar ends here -->
-				<main>
-					<section id="home-view" class="page">
-						<!-- <h1>Artistree</h1>
-							<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi"</p><br>
-							<div class="container">
-								<div class="page" id="login">
-									<h1>Welcome to Artistree</h1>
-									<a href="/login" class="btn btn-primary">Log in with Spotify</a>
-								</div>
+		<main>
+			<section id="home-view" class="page">
 					
-							<div id="loggedin">
-							<div id="user-profile">
-							</div>
-							<div id="oauth">
-							</div>
-							<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
-							</div>
-							</div> -->
+				<div class="container">
+					<h1>Artistree</h1>
+					<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam"</p><br>
+					<div class="page" id="login">
+						<a href="/login" class="btn btn-primary">Log in with Spotify</a>
+					</div>
+		
+				<div id="loggedin">
+				<div id="user-profile">
+				</div>
+				<div id="oauth">
+				</div>
+				<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+				</div>
+				</div>
 
-					</section>
-
-			<section id="discover-view" class="page">
-					<h1>Home Page</h1>
-					<p>This is the home view.</p>
-				</section>
-
-			<section id="about-view" class="page">
-					<h2 id="feedback-title">Questions, Comments, Suggestions?</h2>
-					<form class="feedback" id="feedback">
-						<input type="text" id="title" placeholder="title" /><br>
-						<input type="text" id="comment" placeholder="feedback" /><br>
-						<button type="submit">Submit</button>		
-						<!-- Need Photos and Bios!!! -->
-					</form>
-				</section>	
-
-
-			<section id="error-view" class="page">
-				<h2>Oh noes, we messed up!</h2>
 			</section>
-		</main>
+
+		<section id="discover-view" class="page">
+				<h1>Home Page</h1>
+				<p>This is the home view.</p>
+			</section>
+
+		<section id="about-view" class="page">
+				<h2 id="feedback-title">Questions, Comments, Suggestions?</h2>
+				<form class="feedback" id="feedback">
+					<input type="text" id="title" placeholder="title" /><br>
+					<input type="text" id="comment" placeholder="feedback" /><br>
+					<button type="submit">Submit</button>		
+					<!-- Need Photos and Bios!!! -->
+				</form>
+			</section>	
+
+
+		<section id="error-view" class="page">
+			<h2>Oh noes, we messed up!</h2>
+		</section>
+	</main>
 
 		
 		<!-- External CDN Resources -->
@@ -119,7 +119,7 @@
 		<script src="./scripts/views/discover-view.js"></script>
 		<script src="./scripts/views/about-view.js"></script>
 
-		<script src="./scripts/tree.js"></script>
+		<!-- <script src="./scripts/tree.js"></script> -->
 		<script type="module" src="./scripts/controllers/auth-template.js"></script>
 		<script src="./scripts/controllers/routes.js"></script>
 		<script src="./styles/styles.js"></script>

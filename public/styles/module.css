@@ -1,112 +1,99 @@
+/******************* Hamburger Menu *******************/
+
 
 html {
-	font-size: 10px;
+  font-size: 10px;
 }
-
 .menu {
-	transition: 0.1s transform linear;
-	position: relative;
-	background: 0;
-	float: right;
-	margin: 2rem;
-	height: 2.7rem;
-	width: 3.5rem;
-	z-index: 1;
-	outline: 0;
-	padding: 0;
-	border: 0;
+  transition: 0.1s transform linear;
+  position: relative;
+  background: 0;
+  float: right;
+  margin: 2rem;
+  /* height: 2.7rem; */
+  width: 3.5rem;
+  z-index: 1;
+  outline: 0;
+  padding: 0;
+  border: 0;
 }
-
+.bar, .bar::before, .bar::after {
+  transition: 0.2s; 
+  background: linear 0.1s 0.2s;
+  top: linear 0.2s 0.2s;
+  transform: linear;
+  position: absolute;
+  background: #42ad56;
+  margin: auto;
+  width: 100%;
+  height: 0.3rem;
+  content: '';
+  top: 50%;
+  right: 0;
+}
 .bar {
-	&, &::before, &::after {
-		transition: 0.2s background linear 0.1s, 0.2s top linear 0.2s, 0.2s transform linear;
-		position: absolute;
-		background: #42AD56;
-		margin: auto;
-		width: 100%;
-		height: 0.3rem;
-		content: '';
-		top: 50%;
-		right: 0;
-	}
-
-	& {
-		margin-top: -0.2rem
-	}
-
-	&::before {
-		top: -1.2rem;
-	}
-
-	&::after {
-		top: 1.2rem;
-	}
-
-	&::before,
-	&::after {
-		transform: rotate(180deg);
-	}
-
-	.active & {
-		background: 0;
-
-		&::before {
-			transform: rotate(45deg);
-		}
-
-		&::after {
-			transform: rotate(-45deg);
-		}
-
-		&::before,
-		&::after {
-			top: 0;
-		}
-
-		&,
-		&::before,
-		&::after {
-			transition: 0.2s background linear 0.1s, 0.2s top linear, 0.2s transform linear 0.2s;
-		}
-	}
+  margin-top: -0.2rem;
 }
-
+.bar::before {
+  top: -1.2rem;
+}
+.bar::after {
+  top: 1.2rem;
+}
+.bar::before, .bar::after {
+  transform: rotate(180deg);
+}
+.active .bar {
+  background: 0;
+}
+.active .bar::before {
+  transform: rotate(45deg);
+}
+.active .bar::after {
+  transform: rotate(-45deg);
+}
+.active .bar::before, .active .bar::after {
+  top: 0;
+}
+.active .bar, .active .bar::before, .active .bar::after {
+  transition: 0.2s; 
+  background: linear 0.1s 0.2s; 
+  top: linear 0.2s; 
+  transform: linear 0.2s;
+}
 nav {
-	right: 0;
-	width: 250px;
-	height: 100%;
-	background: #290B15;
-	position: fixed;
-	transform: translateX(250px);
-	transition: transform 0.6s cubic-bezier(.56,.1,.34,.91);
-	padding-top: 6.2rem;
-
-	.menu-open & {
-		transform: translateX(0);
-	}
-	
-	ul {
-		margin: 0;
-		list-style: none;
-		padding: 0;
-		
-		li {
-			color: ghostwhite;
-			padding: 20px 10px;
-			font-size: 2rem;
-			transition: opacity 0.5s ease-in-out;
-   		-moz-transition: opacity 0.5s ease-in-out;
-   		-webkit-transition: opacity 0.5s ease-in-out;
-			
-			&:hover {
-				background: #42AD56;
-				transition: opacity 0.5s ease-in-out;
-   			-moz-transition: opacity 0.5s ease-in-out;
-   			-webkit-transition: opacity 0.5s ease-in-out;
-			}
-		}
-	}
+  right: 0;
+  width: 175px;
+  height: 100%;
+  background: rgb(196, 111, 17);
+  position: fixed;
+  transform: translateX(250px);
+  transition: transform 0.6s cubic-bezier(0.56, 0.1, 0.34, 0.91);
+  padding-top: 6.2rem;
 }
+.menu-open nav {
+  transform: translateX(0);
+}
+nav ul {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+nav ul li {
+  color: ghostwhite;
+  padding: 20px 10px;
+  font-size: 2rem;
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
+}
+nav ul li:hover {
+  background: rgb(41, 11, 21); 
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
+}
+
 
 
 /******************* Classes for D3 nodes *******************/
@@ -128,6 +115,30 @@ nav {
   stroke: #ccc;
   stroke-width: 1.5px;
 }
+
+h1 {
+  font-size: 4rem;
+
+}
+
+a { 
+  text-decoration: none;
+  color:#290b15;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* part of spotify login */
 #login, #loggedin {
   display: none;
@@ -138,4 +149,6 @@ nav {
   white-space: nowrap;
   width: 500px;
 }
+
+
 
