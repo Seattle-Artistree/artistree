@@ -1,9 +1,11 @@
 //import getAuthInstance from './controllers/auth-template';
 var accessToken = '';
 var artists = [];
+//var toBeSeen = []; 
+var totalArtists = [];
 var root;
 
-artists = (function() {
+(function() {
   /**
    * Obtains parameters from the hash of the URL
    * @return Object
@@ -37,31 +39,42 @@ artists = (function() {
         },
         success: function (response) {
           accessToken = access_token;
-          console.log("api response", response);
-          // console.log(image, response.images[0].url);
+          console.log('api response', response);
           var id = response.items[0].id;
           var name = response.items[0].name;
           var image = response.items[0].images[0].url;
-          var children = ["placeholder"];
-          var topArtist = new Artist(id, name, image, children);
-          // console.log('topArtist', topArtist);
+          var parent = 0;
+          var topArtist = new Artist(id, name, image, parent);
           artists.push(topArtist);
-          console.log("artists", artists);
-          //var top = allArtists[0];
           var topperson = artists[0];
-          console.log("first element", artists[0]);
-          //console.log("top", top);
+          
+          var firstArtist = new Array();
+          firstArtist.push(topperson);
+          
+          console.log("CALLING GETRELATEDARTISTS WITH TOBESEEN", firstArtist);
+          var myartists = getRelatedArtists(firstArtist);
+          console.log("MY ARTISTS", myartists);
+          // var deferred = getRelatedArtists(totalArtists, toBeSeen, 0).defer();
+
+          // console.log("DEFERRED", deferred);
+
+          // $.when(deferred).done(function() {
+          //   console.log("RELATED ARTISTS CALLS FINISHED");
+          // });
+
+
           root = topperson;
-          console.log('root', root);
-          console.log('root-id', root.id);
           root.x0 = height / 2;
           root.y0 = 0;
 
+          test(root);
+
           // if (!root.children) {
-            
           //   root.children.forEach(collapse);
           // }
-          update(root);
+
+          // console.log('updating root', root.name);
+          // update(root);
 
           userProfilePlaceholder.innerHTML = userProfileTemplate(response);
           $('#login').hide();
@@ -88,7 +101,6 @@ artists = (function() {
         });
       });
     }, false);
-    return artists;
   }
 })();
 
@@ -112,45 +124,6 @@ var svg = d3.select('#loggedin').append('svg')
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-// var allArtists = [
-//   { id: '000001',
-//     name: 'Jain',
-//     image: 'https://i.scdn.co/image/6e4d8ba95cb31c0475179d55c2af4760136d304f',
-//     children: [
-//       {
-//         id: '000002',
-//         name: 'Lady Gaga',
-//         image: 'https://i.scdn.co/image/5210a7fa24a58b3bc8109082fa7292afe437458f',
-//         children: [
-//           {
-//             id: '3881838',
-//             name: 'Gwen Stefani',
-//             image: 'https://i.scdn.co/image/82a1aaedb700c8e13ae91e54c2c3329e1839c7ca',
-//             children: []
-//           }
-//         ]
-//       },
-//       {
-//         id: '000003',
-//         name: 'Katy Perry',
-//         image: 'https://i.scdn.co/image/fcdc433e8ccf8d46d58ac70db322feb9b3328731',
-//         children: []
-//       }
-//     ]
-//   }
-// ];
-
-// console.log("artists", artists);
-// //var top = allArtists[0];
-// var topperson = artists[0];
-// console.log("first element", artists[0]);
-// //console.log("top", top);
-// var root = topperson;
-// console.log('root', root);
-// console.log('root-id', root.id);
-// root.x0 = height / 2;
-// root.y0 = 0;
-
 function collapse(d) {
   if (d.children) {
     d._children = d.children;
@@ -158,11 +131,13 @@ function collapse(d) {
     d.children = null;
   }
 }
-
-// if (root.children) {
-//   root.children.forEach(collapse);
-// }
-// update(root);
+function test(root) {
+  if (root.children) {
+    root.children.forEach(collapse);
+  }
+  // console.log('updating root');
+  update(root);
+}
 
 d3.select(self.frameElement).style('height', '800px');
 
@@ -178,15 +153,8 @@ function update(source) {
   // Update the nodes…
   var node = svg.selectAll('g.node')
     .data(nodes, function(d) { return d.id || (d.id = ++i); });
-  
-  //get related artists
-  // console.log('node', d3.select(node).datum());
-  // var test = svg.selectAll('g')
-  //               .data(data)
-  //               .enter()
-  //               .append('g').attr('transform', d => `translate(${x(d.name)}, 0)`);
-  console.log('source-id', source);
-  getRelatedArtists(source);
+
+  // getRelatedArtists(source);
 
   // Enter any new nodes at the parent's previous position.
   var nodeEnter = node.enter().append('g')
@@ -224,6 +192,12 @@ function update(source) {
 
   nodeUpdate.select('text')
     .style('fill-opacity', 1);
+
+  svg.selectAll('g.nodes').remove();
+  svg.selectAll('g.nodes')
+    .data(nodes, function(d) { return d.id || (d.id = ++i); })
+    .enter()
+    .append('g');
 
   // Transition exiting nodes to the parent's new position.
   var nodeExit = node.exit().transition()
@@ -270,44 +244,121 @@ function update(source) {
   });
 }
 
-function getRelatedArtists(source) {
-  console.log("artistId", source.id);
-  $.ajax({
-    url: 'https://api.spotify.com/v1/artists/' + source.id + '/related-artists',
-    headers: {
-      'Authorization': 'Bearer ' + accessToken
-    },
-    success: function (response) {
-      //accessToken = access_token;
-      console.log("children-response", response.artists[4]);
-      var id1 = response.artists[2].id;
-      var name1 = response.artists[2].name;
-      var image1 = response.artists[2].images[0].url;
-      var children1 = ["placeholder"];
-      var relatedArtist1 = new Artist(id1, name1, image1, children1);
+function unflatten(totalArtists) {
+  var tree = [],
+    mappedArr = {},
+    arrElem,
+    mappedElem;
 
-      var id2 = response.artists[3].id;
-      var name2 = response.artists[3].name;
-      var image2 = response.artists[3].images[0].url;
-      var children2 = ["placeholder"];
-      var relatedArtist2 = new Artist(id2, name2, image2, children2);
+  // First map the nodes of the array to an object -> create a hash table.
+  for (var i = 0, len = arr.length; i < len; i++) {
+    arrElem = arr[i];
+    mappedArr[arrElem.id] = arrElem;
+    mappedArr[arrElem.id]['children'] = [];
+  }
 
-      console.log("source", source);
-      console.log(source.children);
-      source.children.pop();
-      source.children.push(relatedArtist1);
-      source.children.push(relatedArtist2);
-
-      // allArtists.pop();
-      // allArtists.push(source);
-
-      console.log("first artist", relatedArtist1);
-      console.log("second artist", relatedArtist2);
-      $('#login').hide();
-      $('#loggedin').show();
+  for (var id in mappedArr) {
+    if (mappedArr.hasOwnProperty(id)) {
+      mappedElem = mappedArr[id];
+      // If the element is not at the root level, add it to its parent array of children.
+      if (mappedElem.parentid) {
+        mappedArr[mappedElem['parentid']]['children'].push(mappedElem);
+      } else {
+        // If the element is at the root level, add it to first level elements array.
+        tree.push(mappedElem);
+      }
     }
-  });
+  }
+  return tree;
 }
+
+
+// getAllEmployees: function() {
+//   let allEmployees = []; // this array will contain all employees
+//   let pageNumber = 1; // start with page 1
+//   const getThoseEmployees = function(pageNumber) {
+//       return axios.get(rest_url + 'users/?per_page=50&page=' + pageNumber, {
+//           headers: {
+//               'X-WP-Nonce': WPsettings.nonce
+//           },
+//       }).then(response => {
+//           // add the employees of this response to the array
+//           allEmployees = allEmployees.concat(response.data);
+//           pageNumber++;
+//           if (response.headers['x-wp-total'] > allEmployees.length) {
+//               // do me again...
+//               return getThoseEmployees(pageNumber);
+//           } else {
+//               // this was the last page, return the collected contacts
+//               return allEmployees;
+//           }
+//       });
+//   }
+//   return getThoseEmployees();
+// },
+
+
+// // after "created" in vue
+// this.allEmployees = this.getAllEmployees(); // returns "promise"
+
+function getRelatedArtists(toBeSeen) {
+  var totalArtists = [];
+  var x = 1
+  //console.log("EXITING FUNCTION HERE");
+  console.log("artists to be seen", toBeSeen.length);
+
+  console.log("total artists", totalArtists);
+
+  
+
+  // console.log("NEXT ID", next.id);
+
+  const getThoseArtists = function(toBeSeen, x) {
+    var next = toBeSeen.pop();
+    console.log("INSIDE GET THOSE ARTISTS");
+    $.ajax({
+    url: 'https://api.spotify.com/v1/artists/' + next.id + '/related-artists',
+    headers: {
+      Authorization: 'Bearer ' + accessToken
+    },
+      success: function(response) {
+        var id1 = response.artists[2].id;
+        var name1 = response.artists[2].name;
+        var image1 = response.artists[2].images[0].url;
+        var parent1 = next.id;
+        var relatedArtist1 = new Artist(id1, name1, image1, parent1);
+
+        var id2 = response.artists[3].id;
+        var name2 = response.artists[3].name;
+        var image2 = response.artists[3].images[0].url;
+        var parent2 = next.id;
+        var relatedArtist2 = new Artist(id2, name2, image2, parent2);
+
+        toBeSeen = toBeSeen.concat(relatedArtist1);
+        toBeSeen = toBeSeen.concat(relatedArtist2);
+
+        // update total artist list with the artist we just got
+        // children for
+        totalArtists = totalArtists.concat(next);
+
+        // if we haven't fetched 6 artists yet for our tree
+        // keep making the recursive call so we can populate
+        // out list of artists (which we will turn into a tree later)
+        if (x < 6) {
+          console.log("STILL GETTING ARTISTS", toBeSeen);
+          return getThoseArtists(toBeSeen, x+1);
+        } else {
+          return totalArtists;
+        }
+        getRelatedArtists(toBeSeen, x+1);
+        $('#login').hide();
+        $('#loggedin').show();
+      }
+    });
+  }
+  return getThoseArtists(toBeSeen, 1);
+}
+
 
 // Toggle children on click.
 function click(d) {
@@ -318,15 +369,15 @@ function click(d) {
     d.children = d._children;
     d._children = null;
   }
-  //console.log("d", d);
-  //getRelatedArtists(d.id);
-  update(d);
+  // console.log('d', d);
+  // getRelatedArtists(d.id);
+  //update(d);
 }
 
-function Artist(id, name, image, children) {
+function Artist(id, name, image, parent) {
   this.id = id;
   this.name = name;
   this.image = image;
-  this.children = children;
+  this.parent = parent;
 }
 //console.log(api_response.items[0].images[0].url);
