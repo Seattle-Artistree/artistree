@@ -44,7 +44,7 @@ var root;
           var name = response.name;
           var image = response.images[0].url;
           var parent_id = 0;
-          var topArtist = new Artist(id, name, image, parent_id);
+          var topArtist = {'id': id, 'name': name, 'image': image, 'parent_id': parent_id};
           artists.push(topArtist);
           //var topperson = artists[0];
 
@@ -240,39 +240,6 @@ function update(source) {
   });
 }
 
-function unflatten(array, parent) {
-  var tree = {};
-  parent = typeof parent !== 'undefined' ? parent : {id: 0};
-
-  console.log("PARENT", parent);
-
-  var childrenArray = array.filter(function (child) {
-    console.log("forming children array");
-    return child.parentId == parent.id;
-  });
-
-  console.log("children array", childrenArray);
-
-  if (childrenArray.length > 0) {
-    var childrenObject = {};
-    // Transform children into a hash/object keyed on token
-    childrenArray.forEach(function (child) {
-      childrenObject[child.id] = child;
-    });
-    if (parent.id == 0) {
-      tree = childrenObject;
-    } else {
-      parent['children'] = childrenObject;
-      console.log("parent children", parent['children']);
-    }
-    childrenArray.forEach(function (child) {
-      unflatten(array, child);
-    })
-  }
-
-  return tree;
-};
-
 
 // getAllEmployees: function() {
 //   let allEmployees = []; // this array will contain all employees
@@ -320,6 +287,67 @@ function getNestedChildren(arr, parent_id) {
   return out
 }
 
+function treeify(list, idAttr, parentAttr, childrenAttr) {
+  if (!idAttr) idAttr = 'id';
+  if (!parentAttr) parentAttr = 'parent_id';
+  if (!childrenAttr) childrenAttr = 'children';
+  var treeList = [];
+  var lookup = {};
+  list.forEach(function (obj) {
+    lookup[obj[idAttr]] = obj;
+    obj[childrenAttr] = [];
+  });
+  list.forEach(function (obj) {
+    if (lookup[obj[parentAttr]] != null) {
+      console.log("inside if", obj[parentAttr]);
+      lookup[obj[parentAttr]][childrenAttr].push(obj);
+    } else {
+      treeList.push(obj);
+    }
+  });
+  return treeList;
+};
+
+var arr = [
+  {'id':"Jain" ,'parentid' : 0},
+  {'id':"Beyonce" ,'parentid' : "Train"},
+  {'id':"Train", 'parentid' : "Jain"},
+  {'id':"Kylie Minogue" ,'parentid' : "Beyonce"},
+  {'id':"No Doubt" ,'parentid' : "Kylie Minogue"}
+];
+
+function unflatten(arr) {
+var tree = [],
+    mappedArr = {},
+    arrElem,
+    mappedElem;
+
+// First map the nodes of the array to an object -> create a hash table.
+for(var i = 0, len = arr.length; i < len; i++) {
+  arrElem = arr[i];
+  mappedArr[arrElem.id] = arrElem;
+  mappedArr[arrElem.id]['children'] = [];
+}
+
+
+for (var id in mappedArr) {
+  if (mappedArr.hasOwnProperty(id)) {
+    mappedElem = mappedArr[id];
+    // If the element is not at the root level, add it to its parent array of children.
+    if (mappedElem.parentid) {
+      mappedArr[mappedElem['parentid']]['children'].push(mappedElem);
+    }
+    // If the element is at the root level, add it to first level elements array.
+    else {
+      tree.push(mappedElem);
+    }
+  }
+}
+return tree;
+}
+
+console.log("TESTING UNFLATTEN", unflatten(arr));
+
 function getOtherArtists(toBeSeen, x, totalArtists) {
   //console.log("Artists to be seen: ", toBeSeen);
   //console.log("Artists in our list: ", totalArtists);
@@ -337,14 +365,14 @@ function getOtherArtists(toBeSeen, x, totalArtists) {
         var name1 = response.artists[14].name;
         var image1 = response.artists[14].images[0].url;
         var parent1 = next.id;
-        var relatedArtist1 = new Artist(id1, name1, image1, parent1);
+        var relatedArtist1 = {'id': id1, 'name': name1, 'image': image1, 'parent_id': parent1};
         //console.log("ra 1", relatedArtist1);
 
         var id2 = response.artists[9].id;
         var name2 = response.artists[9].name;
         var image2 = response.artists[9].images[0].url;
         var parent2 = next.id;
-        var relatedArtist2 = new Artist(id2, name2, image2, parent2);
+        var relatedArtist2 = {'id': id2, 'name': name2, 'image': image2, 'parent_id': parent2};
         //console.log("ra 2", relatedArtist2);
 
         toBeSeen.push(relatedArtist1, relatedArtist2);
@@ -364,7 +392,7 @@ function getOtherArtists(toBeSeen, x, totalArtists) {
           console.log("FINAL ARTIST LIST", totalArtists);
           var first = totalArtists[0];
           console.log("first artist", first);
-          var artist_tree = getNestedChildren(totalArtists, 0);
+          var artist_tree = treeify(totalArtists);
           console.log("ARTIST_TREE: ", artist_tree);
 
           root = artist_tree[0];
