@@ -100,6 +100,12 @@ nav ul li:hover {
   -webkit-transition:color .5s ease-out, background .2s ease-in;
 }
 
+/* social icons */
+
+
+
+
+
 /******************* Desktop View!!! *******************/
 @media only screen and (min-width: 960px) {
   nav {
