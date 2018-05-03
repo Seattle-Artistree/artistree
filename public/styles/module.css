@@ -102,13 +102,13 @@ nav ul li:hover {
 }
 
 /******************* Home Classes *******************/
-div #title-wrapper {
+#title-wrapper {
   position: absolute;
   width: 100%;
   margin: 25% auto;
   margin-top: 8rem;
 }
-div #title-wrapper h3 {
+#title-wrapper h3 {
   padding: 0 1rem;
 }
 
