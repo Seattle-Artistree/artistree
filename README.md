@@ -1,1 +1,1 @@
-# artistree-server
+# artistree
