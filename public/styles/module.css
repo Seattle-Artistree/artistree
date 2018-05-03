@@ -1,5 +1,120 @@
 
-/* classes for D3 nodes */
+/******************* Hamburger Menu *******************/
+.menu {
+  transition: 0.1s transform linear;
+  position: relative;
+  background: 0;
+  float: right;
+  margin: 2rem;
+  height: 2.7rem;
+  width: 3.5rem;
+  z-index: 3;
+  outline: 0;
+  padding: 0;
+  border: 0;
+}
+.bar, .bar::before, .bar::after {
+  transition: 0.2s; 
+  background: linear 0.1s 0.2s;
+  top: linear 0.2s 0.2s;
+  transform: linear;
+  position: absolute;
+  background: #42ad56;
+  margin: auto;
+  width: 100%;
+  height: 0.3rem;
+  content: '';
+  top: 50%;
+  right: 0;
+}
+.bar {
+  margin-top: -0.2rem;
+}
+.bar::before {
+  top: -1.2rem;
+}
+.bar::after {
+  top: 1.2rem;
+}
+.bar::before, .bar::after {
+  transform: rotate(180deg);
+}
+.active .bar {
+  background: 0;
+}
+.active .bar::before {
+  transform: rotate(45deg);
+}
+.active .bar::after {
+  transform: rotate(-45deg);
+}
+.active .bar::before, .active .bar::after {
+  top: 0;
+}
+.active .bar, .active .bar::before, .active .bar::after {
+  transition: 0.2s; 
+  background: linear 0.1s 0.2s; 
+  top: linear 0.2s; 
+  transform: linear 0.2s;
+}
+nav {
+  z-index: 2;
+  right: 0;
+  width: 175px;
+  height: 100%;
+  background: rgb(9, 78, 69);
+  text-align: left;
+  color:ghostwhite;
+  position: fixed;
+  transform: translateX(175px);
+  transition: transform 0.6s cubic-bezier(0.56, 0.1, 0.34, 0.91);
+  padding-top: 6.2rem;
+  -webkit-box-shadow: 0 -3px 6px 3px #111;
+     -moz-box-shadow: 0 -3px 6px 3px #111;
+          box-shadow: 0 -3px 6px 3px #111;
+}
+.menu-open nav {
+  transform: translateX(0);
+  -webkit-box-shadow: 0 -3px 6px 3px #111;
+     -moz-box-shadow: 0 -3px 6px 3px #111;
+          box-shadow: 0 -3px 6px 3px #111;
+}
+nav ul {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+nav ul li {
+  color: ghostwhite;
+  padding: 1rem 1.5rem;
+  font-size: 1.8rem;
+  -o-transition:color .2s ease-out, background .2s ease-in;
+  -ms-transition:color .2s ease-out, background .2s ease-in;
+  -moz-transition:color .2s ease-out, background .2s ease-in;
+  -webkit-transition:color .2s ease-out, background .2s ease-in;
+}
+nav ul li:hover {
+  background: #42AD56; 
+  -o-transition:color .5s ease-out, background .2s ease-in;
+  -ms-transition:color .5s ease-out, background .2s ease-in;
+  -moz-transition:color .5s ease-out, background .2s ease-in;
+  -webkit-transition:color .5s ease-out, background .2s ease-in;
+}
+
+
+/******************* Home Classes *******************/
+div #title-wrapper {
+  position: absolute;
+  width: 100%;
+  margin: 25% auto;
+  margin-top: 8rem;
+}
+div #title-wrapper h3 {
+  padding: 0 1rem;
+}
+
+
+/******************* D3 Classes *******************/
 svg{
   padding-top: 25px;
 }
@@ -22,6 +137,8 @@ svg{
   stroke: #ccc;
   stroke-width: 1.5px;
 }
+
+
 /* part of spotify login */
 #login, #loggedin {
   display: none;
@@ -33,3 +150,19 @@ svg{
   width: 500px;
 }
 
+
+/******************* Desktop View!!! *******************/
+@media only screen and (min-width: 960px) {
+  div #title-wrapper {
+    margin-top: 14rem;
+  }
+
+  nav {
+    width: 300px;
+    transform: translateX(300px);
+  }
+  nav ul li {
+    color: ghostwhite;
+    padding: 1rem 2.5rem;
+  }
+}
