@@ -179,3 +179,7 @@ app.get('/test', (req, res) => res.send('It\'s working!'));
 
 console.log('Listening on 8888');
 app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
+
+app.post('/index', (request, response) => {
+  response.send('test post');
+});
