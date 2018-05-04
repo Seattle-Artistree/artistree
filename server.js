@@ -199,9 +199,6 @@ res.send(b)
 console.log('Listening on 8888');
 app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
 
-<<<<<<< HEAD
-=======
-app.post('/index', (request, response) => {
-  response.send('test post');
-});
->>>>>>> 6f290ceb5caf974d49140bdca9b8f8922dfe64b9
+// app.post('/index', (request, response) => {
+//   response.send('test post');
+// });
