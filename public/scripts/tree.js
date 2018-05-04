@@ -1,7 +1,7 @@
 var accessToken = '';
-//var toBeSeen = []; 
-var totalArtists = [];
+var toBeSeen = [];
 var root;
+var artists = [];
 
 (function() {
   /**
@@ -37,40 +37,32 @@ var root;
         },
         success: function (response) {
           accessToken = access_token;
-          //console.log('api response', response);
-          var artists = [];
-
           var id = response.id;
           var name = response.name;
           var image = response.images[0].url;
-          var parent_id = 0;
-          var topArtist = {'id': id, 'name': name, 'image': image, 'parent_id': parent_id};
+          var parentid = 0;
+          var topArtist = {'id': id, 'name': name, 'image': image, 'parentid': parentid};
           artists.push(topArtist);
-          //var topperson = artists[0];
+          var topperson = artists[0];
 
           var allArtists = [];
-          //var firstArtist = [topperson];
+          var firstArtist = [topperson];
           
-          console.log("FIRST ARTIST", artists);
+          console.log("FIRST ARTIST", artists[0]);
           console.log("CALLING GETRELATEDARTISTS WITH FIRST ARTIST", allArtists);
-          getOtherArtists(artists, 1, allArtists)
 
-          // var deferred = getRelatedArtists(totalArtists, toBeSeen, 0).defer();
-
-          // console.log("DEFERRED", deferred);
-
-          // $.when(deferred).done(function() {
-          //   console.log("RELATED ARTISTS CALLS FINISHED");
-          // });
-
-          //var toproot = artists[0];
-
-          // if (!root.children) {
-          //   root.children.forEach(collapse);
-          // }
-
-          // console.log('updating root', root.name);
-          // update(root);
+          //adding a callback function to getOtherArtists
+          // so that the rest of the code does not execute until
+          // this function is finished (async problems)
+          getOtherArtists(artists, 0, allArtists, function(totalArtists) {
+            var artist_tree = unflatten(totalArtists);
+            root = artist_tree[0];
+            root.x0 = height / 2;
+            root.y0 = 0;
+           
+            console.log("ARTIST_TREE: ", artist_tree);
+            triggerUpdateRoot(root);
+          });
 
           userProfilePlaceholder.innerHTML = userProfileTemplate(response);
           $('#login').hide();
@@ -127,11 +119,10 @@ function collapse(d) {
     d.children = null;
   }
 }
-function test(root) {
+function triggerUpdateRoot(root) {
   if (root.children) {
     root.children.forEach(collapse);
   }
-  // console.log('updating root');
   update(root);
 }
 
@@ -162,6 +153,9 @@ function update(source) {
     .attr('r', 1e-6)
     .style('filter', function(d) { return d.image; });
 
+  /* DO NOT DELETE THIS COMMENT!!! 
+     THIS IS COMMENTED OUT FOR TESTING.  
+  */
 
   nodeEnter.append('text')
     .attr('dx', 60)
@@ -240,82 +234,6 @@ function update(source) {
   });
 }
 
-
-// getAllEmployees: function() {
-//   let allEmployees = []; // this array will contain all employees
-//   let pageNumber = 1; // start with page 1
-//   const getThoseEmployees = function(pageNumber) {
-//       return axios.get(rest_url + 'users/?per_page=50&page=' + pageNumber, {
-//           headers: {
-//               'X-WP-Nonce': WPsettings.nonce
-//           },
-//       }).then(response => {
-//           // add the employees of this response to the array
-//           allEmployees = allEmployees.concat(response.data);
-//           pageNumber++;
-//           if (response.headers['x-wp-total'] > allEmployees.length) {
-//               // do me again...
-//               return getThoseEmployees(pageNumber);
-//           } else {
-//               // this was the last page, return the collected contacts
-//               return allEmployees;
-//           }
-//       });
-//   }
-//   return getThoseEmployees();
-// },
-
-
-// // after "created" in vue
-// this.allEmployees = this.getAllEmployees(); // returns "promise"
-
-function getNestedChildren(arr, parent_id) {
-  var out = []
-  for(var i in arr) {
-      console.log("element", arr[i]);
-      console.log("parent_id", parent_id)
-      if(arr[i].parent_id == parent_id) {
-          var children = getNestedChildren(arr, arr[i].id)
-
-          if(children.length) {
-              arr[i].children = children
-          }
-          console.log("out", out);
-          out.push(arr[i])
-      }
-  }
-  return out
-}
-
-function treeify(list, idAttr, parentAttr, childrenAttr) {
-  if (!idAttr) idAttr = 'id';
-  if (!parentAttr) parentAttr = 'parent_id';
-  if (!childrenAttr) childrenAttr = 'children';
-  var treeList = [];
-  var lookup = {};
-  list.forEach(function (obj) {
-    lookup[obj[idAttr]] = obj;
-    obj[childrenAttr] = [];
-  });
-  list.forEach(function (obj) {
-    if (lookup[obj[parentAttr]] != null) {
-      console.log("inside if", obj[parentAttr]);
-      lookup[obj[parentAttr]][childrenAttr].push(obj);
-    } else {
-      treeList.push(obj);
-    }
-  });
-  return treeList;
-};
-
-var arr = [
-  {'id':"Jain" ,'parentid' : 0},
-  {'id':"Beyonce" ,'parentid' : "Train"},
-  {'id':"Train", 'parentid' : "Jain"},
-  {'id':"Kylie Minogue" ,'parentid' : "Beyonce"},
-  {'id':"No Doubt" ,'parentid' : "Kylie Minogue"}
-];
-
 function unflatten(arr) {
 var tree = [],
     mappedArr = {},
@@ -326,7 +244,7 @@ var tree = [],
 for(var i = 0, len = arr.length; i < len; i++) {
   arrElem = arr[i];
   mappedArr[arrElem.id] = arrElem;
-  mappedArr[arrElem.id]['children'] = [];
+  mappedArr[arrElem.id].children = [];
 }
 
 
@@ -335,7 +253,7 @@ for (var id in mappedArr) {
     mappedElem = mappedArr[id];
     // If the element is not at the root level, add it to its parent array of children.
     if (mappedElem.parentid) {
-      mappedArr[mappedElem['parentid']]['children'].push(mappedElem);
+      mappedArr[[mappedElem.parentid]]['children'].push(mappedElem);
     }
     // If the element is at the root level, add it to first level elements array.
     else {
@@ -346,129 +264,42 @@ for (var id in mappedArr) {
 return tree;
 }
 
-console.log("TESTING UNFLATTEN", unflatten(arr));
+async function getOtherArtists(toBeSeen, x, totalArtists, callback) {
+  console.log("TOTAL ARTISTS:  ", totalArtists);
+  console.log("TO BE SEEN:  ", toBeSeen);
 
-function getOtherArtists(toBeSeen, x, totalArtists) {
-  //console.log("Artists to be seen: ", toBeSeen);
-  //console.log("Artists in our list: ", totalArtists);
+  while (x < 31) {
+    var next = toBeSeen[0];
+    var p = await $.ajax({
+      url: 'https://api.spotify.com/v1/artists/' + next.id + '/related-artists',
+      headers: {
+        Authorization: 'Bearer ' + accessToken
+      },
+        success: function(response) {
+          var id1 = response.artists[2].id;
+          var name1 = response.artists[2].name;
+          var image1 = response.artists[2].images[0].url;
+          var relatedArtist1 = {'id': id1, 'name': name1, 'image': image1, 'parentid': next.id};
 
-  var next = toBeSeen.pop();
-  console.log("FETCHING ARTISTS FOR :", next.id);
-  $.ajax({
-    url: 'https://api.spotify.com/v1/artists/' + next.id + '/related-artists',
-    headers: {
-      Authorization: 'Bearer ' + accessToken
-    },
-      success: function(response) {
-        console.log(response);
-        var id1 = response.artists[14].id;
-        var name1 = response.artists[14].name;
-        var image1 = response.artists[14].images[0].url;
-        var parent1 = next.id;
-        var relatedArtist1 = {'id': id1, 'name': name1, 'image': image1, 'parent_id': parent1};
-        //console.log("ra 1", relatedArtist1);
+          var id2 = response.artists[19].id;
+          var name2 = response.artists[19].name;
+          var image2 = response.artists[19].images[0].url;
+          var relatedArtist2 = {'id': id2, 'name': name2, 'image': image2, 'parentid': next.id};
 
-        var id2 = response.artists[9].id;
-        var name2 = response.artists[9].name;
-        var image2 = response.artists[9].images[0].url;
-        var parent2 = next.id;
-        var relatedArtist2 = {'id': id2, 'name': name2, 'image': image2, 'parent_id': parent2};
-        //console.log("ra 2", relatedArtist2);
+          toBeSeen.push(relatedArtist1);
+          toBeSeen.push(relatedArtist2);
 
-        toBeSeen.push(relatedArtist1, relatedArtist2);
-        //toBeSeen.push(relatedArtist2);
+          toBeSeen.shift();
+          totalArtists.push(next);
 
-        // update total artist list with the artist we just got
-        // children for
-        totalArtists.push(next);
-
-        // if we haven't fetched 6 artists yet for our tree
-        // keep making the recursive call so we can populate
-        // out list of artists (which we will turn into a tree later)
-        if (x < 10) {
-          //console.log("STILL GETTING ARTISTS", toBeSeen);
-          return getOtherArtists(toBeSeen, x+1, totalArtists);
-        } else {
-          console.log("FINAL ARTIST LIST", totalArtists);
-          var first = totalArtists[0];
-          console.log("first artist", first);
-          var artist_tree = treeify(totalArtists);
-          console.log("ARTIST_TREE: ", artist_tree);
-
-          root = artist_tree[0];
-          root.x0 = height / 2;
-          root.y0 = 0;
-
-          test(root);
-          return totalArtists;
+          $('#login').hide();
+          $('#loggedin').show();
         }
-        //getRelatedArtists(toBeSeen, x+1);
-        // $('#login').hide();
-        // $('#loggedin').show();
-      }
-    });
+      });
+      x = x + 1;
+  }
+  callback(totalArtists);
 }
-
-// function getRelatedArtists(toBeSeen) {
-//   var totalArtists = [];
-//   var x = 1
-//   //console.log("EXITING FUNCTION HERE");
-//   console.log("artists to be seen", toBeSeen.length);
-
-//   console.log("total artists", totalArtists);
-
-  
-
-//   // console.log("NEXT ID", next.id);
-
-//   function getThoseArtists(toBeSeen, x) {
-//     var next = toBeSeen.pop();
-//     console.log("INSIDE GET THOSE ARTISTS");
-//     $.ajax({
-//       url: 'https://api.spotify.com/v1/artists/' + next.id + '/related-artists',
-//       headers: {
-//         Authorization: 'Bearer ' + accessToken
-//       },
-//       async: false,
-//       success: function(response) {
-//         var id1 = response.artists[2].id;
-//         var name1 = response.artists[2].name;
-//         var image1 = response.artists[2].images[0].url;
-//         var parent1 = next.id;
-//         var relatedArtist1 = new Artist(id1, name1, image1, parent1);
-
-//         var id2 = response.artists[3].id;
-//         var name2 = response.artists[3].name;
-//         var image2 = response.artists[3].images[0].url;
-//         var parent2 = next.id;
-//         var relatedArtist2 = new Artist(id2, name2, image2, parent2);
-
-//         toBeSeen = toBeSeen.concat(relatedArtist1);
-//         toBeSeen = toBeSeen.concat(relatedArtist2);
-
-//         // update total artist list with the artist we just got
-//         // children for
-//         totalArtists = totalArtists.concat(next);
-
-//         // if we haven't fetched 6 artists yet for our tree
-//         // keep making the recursive call so we can populate
-//         // out list of artists (which we will turn into a tree later)
-//         if (x < 6) {
-//           console.log("STILL GETTING ARTISTS", toBeSeen);
-//           return getThoseArtists(toBeSeen, x+1);
-//         } else {
-//           console.log("FINAL ARTIST LIST", totalArtists);
-//           return totalArtists;
-//         }
-//         //getRelatedArtists(toBeSeen, x+1);
-//         $('#login').hide();
-//         $('#loggedin').show();
-//       }
-//     });
-//   }
-//   return getThoseArtists(toBeSeen, 1);
-// }
-
 
 // Toggle children on click.
 function click(d) {
@@ -479,15 +310,12 @@ function click(d) {
     d.children = d._children;
     d._children = null;
   }
-  // console.log('d', d);
-  // getRelatedArtists(d.id);
-  //update(d);
+  update(d);
 }
 
-function Artist(id, name, image, parent_id) {
+function Artist(id, name, image, parentid) {
   this.id = id;
   this.name = name;
   this.image = image;
-  this.parent_id = parent_id;
+  this.parentid = parentid;
 }
-//console.log(api_response.items[0].images[0].url);
