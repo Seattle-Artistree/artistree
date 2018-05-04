@@ -1,16 +1,145 @@
-<!DOCTYPE <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Artistree</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
-</head>
-<body>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Artistree</title>
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
-    <h1>IS THIS WORKING?</h1>
-    
-</body>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./styles/reset.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./styles/base.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./styles/layout.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./styles/module.css" />
+		
+		<!-- Application Templates -->
+		<script id="user-profile-template" type="text/x-handlebars-template">
+			<h1>Logged in as {{display_name}}</h1>
+			<!-- <div class="media">
+				<div class="pull-left">
+					<img class="media-object" width="150" src="{{images.0.url}}" />
+				</div>
+				<div class="media-body">
+					<dl class="dl-horizontal">
+						<dt>Artist name</dt><dd class="clearfix">{{name}}</dd>
+						<dt>Id</dt><dd>{{id}}</dd> -->
+						<!-- <dt>Email</dt><dd>{{email}}</dd>
+						<dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
+						<dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
+						<dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
+						<dt>Country</dt><dd>{{country}}</dd> -->
+					<!-- </dl>
+				</div>
+			</div> -->
+		</script>
+		
+		<script id="oauth-template" type="text/x-handlebars-template">
+			<h2>oAuth info</h2>
+			<dl class="dl-horizontal">
+				<dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
+				<dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
+			</dl>
+		</script>
+		
+		<script type="text/x-handlebars-template" id="error-template">
+			<h3>Oops, something went wrong!</h3>
+			<p>{{status}}: {{statusText}}</p>
+		</script>
+	</head>
+
+	<body>
+		<!-- Header needs data-content and classes renamed -->
+		<header>
+			<div class="header-content">
+				<a href="/"><img src="http://via.placeholder.com/100x100" alt="logo"></a>
+				<h2>Artistree</h2>
+			</div>
+
+			<nav class="main-nav">
+				<ul>
+			<a href="./">Landing</a>
+			<a href="./home">Home</a>
+			<a href="./about">About Us</a>
+
+				</ul>
+			</nav>
+		</header>
+		
+
+		<main>
+			<div class="container">
+				<div class="page" id="login">
+					<h1>Welcome to Artistree</h1>
+					<a href="/login" class="btn btn-primary">Log in with Spotify</a>
+				</div>
+
+				<div id="loggedin">
+					<div id="user-profile">
+					</div>
+					<div id="oauth">
+					</div>
+					<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+				</div>
+			</div>
+
+			<section id="home-view" class="page">
+				<h1>Home Page</h1>
+				<p>This is the home view.</p>
+			</section>
+			
+			<section id="landing-view" class="page">
+				<h1>Landing View</h1>
+				<p>This is the landing view.</p>
+			</section>
+
+			<section id="about-view" class="page">
+					<h2 id="feedback-title">Questions, Comments, Suggestions?</h2>
+					<form class="feedback" id="feedback">
+						<input type="text" id="title" placeholder="title" /><br>
+						<input type="text" id="comment" placeholder="feedback" /><br>
+						<button type="submit">Submit</button>		
+						<!-- Need Photos and Bios!!! -->
+					</form>
+				</section>	
+
+
+			<section id="error-view" class="page">
+				<h2>Oh noes, we messed up!</h2>
+			</section>
+		</main>
+
+		
+
+
+		<footer>
+			<!-- <aside class="social-links">
+				<ul>
+					<li><i class="pages" id="icon-mail2"><a href=""></a></i></li>
+					<li><i class="pages" id="icon-twitter"><a href=""></a></i></li>
+					<li><i class="pages" id="icon-github"><a href=""></a></i></li>
+					<li><i class="pages" id="icon-linkedin2"><a href=""></a></i></li>
+				</ul>
+			</aside> -->
+		</footer>
+		
+		<!-- External CDN Resources -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+		<script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+		<script src="https://d3js.org/d3.v3.min.js"></script>
+		<!-- Application Resources -->
+		<script src="./scripts/views/home-view.js"></script>
+		<script src="./scripts/views/about-view.js"></script>
+		<script src="./scripts/views/landing-view.js"></script>
+
+		<script src="./scripts/tree.js"></script>
+		<script type="module" src="./scripts/controllers/auth-template.js"></script>
+		<script src="./scripts/controllers/routes.js"></script>
+		
+
+
+		
+		
+	</body>
 </html>

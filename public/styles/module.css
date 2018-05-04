@@ -1,0 +1,35 @@
+
+/* classes for D3 nodes */
+svg{
+  padding-top: 25px;
+}
+
+.node {
+  cursor: pointer;
+}
+
+.node circle {
+  stroke-width: 1.5px;
+  border-radius: 50%;
+}
+
+.node text {
+  font: 12px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+/* part of spotify login */
+#login, #loggedin {
+  display: none;
+}
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 500px;
+}
+

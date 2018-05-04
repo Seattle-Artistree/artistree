@@ -1,0 +1,40 @@
+{
+  "globals" : {
+    "rawData": true,
+    "app": true,
+    "Handlebars": true,
+    "page": true,
+    "$": true,
+    "marked": true,
+    "hljs": true
+  },
+  "ecmaFeatures": {
+    "impliedStrict": true, 
+    "modules": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  },
+  "env": {
+    "browser": true,
+    "jquery": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "eqeqeq": ["error", "always"],
+    "no-template-curly-in-string": "error",
+    "no-console": "off",
+    "no-undefined": "off",
+    "no-undef": 2,
+    "no-unused-vars": 2,
+    "indent": ["error", 2],
+    "quotes": ["warn", "single", {"allowTemplateLiterals": true}],
+    "no-multi-spaces": ["warn", {"exceptions": { "VariableDeclarator": true }}],
+    "no-trailing-spaces": "warn",
+    "new-cap": "warn",
+    "no-redeclare": ["error", { "builtinGlobals": true }]
+  }
+}
