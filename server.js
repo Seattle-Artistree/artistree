@@ -184,7 +184,6 @@ app.post('/feedback', express.urlencoded({ extended: true }), (request, response
     `,
     [
       comment,
-
     ])
     // function(err) {
     // if (err) console.error('error',err);
