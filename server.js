@@ -174,14 +174,47 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/test', (req, res) => res.send('It\'s working!'));
 
+//test database info being stored
+
+app.post('/feedback', express.urlencoded({ extended: true }), (request, response) => {
+
+  const { comment } = request.body; 
+
+  client.query(`
+        INSERT INTO feedback (
+          comment)
+           VALUES ($1);
+    `,
+    [
+      comment,
+
+    ])
+    // function(err) {
+    // if (err) console.error('error',err);
+    // response.send(result)
+    .then(() => response.sendStatus(201));
+});
+
+
+//   client.query(`
+//         INSERT INTO feedback (comment) VALUES ('$comment');
+//     `).then(result => response.send(result));
+// })
+
 // let url = 'https://api.spotify.com/v1/me/top/artists/';
 
 // app.get(url, (req, res) => console.log(res));
+
+app.post('/feedback', (req, res) => {
+const b = req.body
+console.log('test' + b)
+res.send(b)
+})
 
 
 console.log('Listening on 8888');
 app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
 
-app.post('/index', (request, response) => {
-  response.send('test post');
-});
+// app.post('/index', (request, response) => {
+//   response.send('test post');
+// });
