@@ -42,12 +42,11 @@ var artists = [];
         url: 'https://api.spotify.com/v1/me/top/artists',
         headers: {
           'Authorization': 'Bearer ' + access_token
-          // https://api.spotify.com/v1/me/top/artists
-          
           // API JSON traversals
             // items[0].id
-            // items[0].images[2].url
             // items[0].name
+            // items[0].images[2].url
+              // Using the 200px image to save some loading time
         },
         success: function (response) {
           console.log('TOP artist response', response);
@@ -145,7 +144,7 @@ async function getOtherArtists(toBeSeen, x, totalArtists, callback) {
   console.log("TOTAL ARTISTS:  ", totalArtists);
   console.log("TO BE SEEN:  ", toBeSeen);
 
-  while (x < 31) {
+  while (x < 51) {
     var next = toBeSeen[0];
     var p = await $.ajax({
       url: 'https://api.spotify.com/v1/artists/' + next.id + '/related-artists',
@@ -155,14 +154,13 @@ async function getOtherArtists(toBeSeen, x, totalArtists, callback) {
         success: function(response) {
           var id1 = response.artists[2].id;
           var name1 = response.artists[2].name;
-          var image1 = response.artists[2].images[0].url;
+          var image1 = response.artists[2].images[2].url;
           var relatedArtist1 = {'id': id1, 'name': name1, 'image': image1, 'parentId': next.id};
 
           var id2 = response.artists[19].id;
           var name2 = response.artists[19].name;
-          var image2 = response.artists[19].images[0].url;
+          var image2 = response.artists[19].images[2].url;
           var relatedArtist2 = {'id': id2, 'name': name2, 'image': image2, 'parentId': next.id};
-
           toBeSeen.push(relatedArtist1);
           toBeSeen.push(relatedArtist2);
 
@@ -189,10 +187,3 @@ function click(d) {
   }
   update(d);
 }
-
-// function Artist(id, name, image, parentId) {
-//   this.id = id;
-//   this.name = name;
-//   this.image = image;
-//   this.parentId = parentId;
-// }
