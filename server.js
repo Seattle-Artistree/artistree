@@ -60,6 +60,8 @@ app.get('/login', function(req, res) {
 
   // your application requests authorization
   let scope = 'user-top-read';
+  console.log('checking /login');
+  console.log('redirect_uri', redirect_uri);
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
@@ -197,3 +199,9 @@ res.send(b)
 console.log('Listening on 8888');
 app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
 
+<<<<<<< HEAD
+=======
+app.post('/index', (request, response) => {
+  response.send('test post');
+});
+>>>>>>> 6f290ceb5caf974d49140bdca9b8f8922dfe64b9
