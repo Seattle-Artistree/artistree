@@ -177,10 +177,10 @@ app.get('/test', (req, res) => res.send('It\'s working!'));
 // app.get(url, (req, res) => console.log(res));
 
 app.post('/feedback', (req, res) => {
-const b = req.body
-console.log('test' + b)
-res.send(b)
-})
+  const b = req.body;
+  console.log('test' + b);
+  res.send(b);
+});
 
 
 console.log('Listening on 8888');

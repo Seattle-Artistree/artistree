@@ -15,10 +15,10 @@ $('#feedback').on('submit', function(event){
   console.log('test');
   event.preventDefault();
 
-  let test = $('#comment').val() 
+  let test = $('#comment').val();
   console.log(test);
-$.post('/feedback', {comment:test}).then(function(feedback){
-  console.log(feedback)
-})
-})
+  $.post('/feedback', {comment:test}).then(function(feedback){
+    console.log(feedback);
+  });
+});
 
