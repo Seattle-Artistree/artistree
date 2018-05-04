@@ -1,6 +1,5 @@
 var accessToken = '';
-var toBeSeen = []; 
-var totalArtists = [];
+var toBeSeen = [];
 var root;
 var artists = [];
 
@@ -38,9 +37,6 @@ var artists = [];
         },
         success: function (response) {
           accessToken = access_token;
-          //console.log('api response', response);
-          
-
           var id = response.id;
           var name = response.name;
           var image = response.images[0].url;
@@ -65,16 +61,8 @@ var artists = [];
             root.y0 = 0;
            
             console.log("ARTIST_TREE: ", artist_tree);
-            test(root);
+            triggerUpdateRoot(root);
           });
-          //var toproot = artists[0];
-
-          // if (!root.children) {
-          //   root.children.forEach(collapse);
-          // }
-
-          // console.log('updating root', root.name);
-          // update(root);
 
           userProfilePlaceholder.innerHTML = userProfileTemplate(response);
           $('#login').hide();
@@ -131,11 +119,10 @@ function collapse(d) {
     d.children = null;
   }
 }
-function test(root) {
+function triggerUpdateRoot(root) {
   if (root.children) {
     root.children.forEach(collapse);
   }
-  // console.log('updating root');
   update(root);
 }
 
@@ -166,11 +153,14 @@ function update(source) {
     .attr('r', 1e-6)
     .style('filter', function(d) { return d.image; });
 
+  /* DO NOT DELETE THIS COMMENT!!! 
+     THIS IS COMMENTED OUT FOR TESTING.  
+  */
 
-  nodeEnter.append('text')
-    .attr('dx', 60)
-    .attr('dy', '.35em')
-    .text(function(d) { return d.name; });
+  // nodeEnter.append('text')
+  //   .attr('dx', 60)
+  //   .attr('dy', '.35em')
+  //   .text(function(d) { return d.name; });
 
   node.append('image')
     .attr('id', 'artist_image')
@@ -244,14 +234,6 @@ function update(source) {
   });
 }
 
-// var arr = [
-//   {'id':"Jain" ,'parentid' : 0},
-//   {'id':"Beyonce" ,'parentid' : "Train"},
-//   {'id':"Train", 'parentid' : "Jain"},
-//   {'id':"Kylie Minogue" ,'parentid' : "Beyonce"},
-//   {'id':"No Doubt" ,'parentid' : "Kylie Minogue"}
-// ];
-
 function unflatten(arr) {
 var tree = [],
     mappedArr = {},
@@ -262,7 +244,6 @@ var tree = [],
 for(var i = 0, len = arr.length; i < len; i++) {
   arrElem = arr[i];
   mappedArr[arrElem.id] = arrElem;
-  //console.log("ARRAYELEM", mappedArr[arrElem.id]);
   mappedArr[arrElem.id].children = [];
 }
 
@@ -270,13 +251,8 @@ for(var i = 0, len = arr.length; i < len; i++) {
 for (var id in mappedArr) {
   if (mappedArr.hasOwnProperty(id)) {
     mappedElem = mappedArr[id];
-    //console.log("MAPPED ELEM", mappedElem);
     // If the element is not at the root level, add it to its parent array of children.
-    if (mappedElem.parentid && mappedElem.parentid != 0) {
-      //console.log("MAPPED PARENT", mappedElem.parentid);
-      //var mappedParent = mappedArr[mappedElem['parentid']];
-      //console.log(mappedParent);
-      //console.log(mappedArr[mappedElem.parentid]);
+    if (mappedElem.parentid) {
       mappedArr[[mappedElem.parentid]]['children'].push(mappedElem);
     }
     // If the element is at the root level, add it to first level elements array.
@@ -288,60 +264,34 @@ for (var id in mappedArr) {
 return tree;
 }
 
-//console.log("TESTING UNFLATTEN", unflatten(arr));
-
 async function getOtherArtists(toBeSeen, x, totalArtists, callback) {
-  //console.log("Artists to be seen: ", toBeSeen);
-  //console.log("Artists in our list: ", totalArtists);
   console.log("TOTAL ARTISTS:  ", totalArtists);
   console.log("TO BE SEEN:  ", toBeSeen);
 
-  while (x < 10) {
-    var next = toBeSeen.pop();
-    //console.log("FETCHING ARTISTS FOR :", next.id);
+  while (x < 31) {
+    var next = toBeSeen[0];
     var p = await $.ajax({
       url: 'https://api.spotify.com/v1/artists/' + next.id + '/related-artists',
       headers: {
         Authorization: 'Bearer ' + accessToken
       },
         success: function(response) {
-          //console.log(response);
           var id1 = response.artists[2].id;
           var name1 = response.artists[2].name;
           var image1 = response.artists[2].images[0].url;
-          //var parent1 = next.id;
           var relatedArtist1 = {'id': id1, 'name': name1, 'image': image1, 'parentid': next.id};
-          //console.log("ra 1", relatedArtist1);
 
           var id2 = response.artists[19].id;
           var name2 = response.artists[19].name;
           var image2 = response.artists[19].images[0].url;
-          //var parent2 = next.id;
           var relatedArtist2 = {'id': id2, 'name': name2, 'image': image2, 'parentid': next.id};
-          //console.log("ra 2", relatedArtist2);
-          toBeSeen.push(relatedArtist1, relatedArtist2);
-          //toBeSeen.push(relatedArtist2);
 
-          // update total artist list with the artist we just got
-          // children for
+          toBeSeen.push(relatedArtist1);
+          toBeSeen.push(relatedArtist2);
+
+          toBeSeen.shift();
           totalArtists.push(next);
-          //totalArtists.push(relatedArtist1, relatedArtist2);
 
-          // if we haven't fetched 6 artists yet for our tree
-          // keep making the recursive call so we can populate
-          // out list of artists (which we will turn into a tree later)
-          // if (x < 10) {
-          //   //console.log("STILL GETTING ARTISTS", toBeSeen);
-          //   console.log("TWO RELATED ARTISTS", relatedArtist1, relatedArtist2);
-          //   return getOtherArtists(toBeSeen, x+1, totalArtists);
-          // } else {
-          //   //console.log("FINAL ARTIST LIST", totalArtists);
-          //   var first = totalArtists[0];
-          //   //console.log("first artist", first);
-
-          //   //return totalArtists;
-          // }
-          //getRelatedArtists(toBeSeen, x+1);
           $('#login').hide();
           $('#loggedin').show();
         }
