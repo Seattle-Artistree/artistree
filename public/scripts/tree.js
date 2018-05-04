@@ -157,10 +157,10 @@ function update(source) {
      THIS IS COMMENTED OUT FOR TESTING.  
   */
 
-  // nodeEnter.append('text')
-  //   .attr('dx', 60)
-  //   .attr('dy', '.35em')
-  //   .text(function(d) { return d.name; });
+  nodeEnter.append('text')
+    .attr('dx', 60)
+    .attr('dy', '.35em')
+    .text(function(d) { return d.name; });
 
   node.append('image')
     .attr('id', 'artist_image')
