@@ -7,8 +7,8 @@ page('/*', (ctx, next) => {
 
 // page('/', () => console.log('hola'));
 
-page('/', () => app.landingView.init());
-page('/home', () => app.homeView.init());
+page('/', () => app.homeView.init());
+page('/discover', () => app.discoverView.init());
 page('/about', () => app.aboutView.init());
 
 page.start();

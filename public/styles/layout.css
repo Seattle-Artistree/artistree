@@ -1,0 +1,41 @@
+
+/******************* Structural Selectors *******************/
+header {
+  width: 100%;
+  height: 15%;
+  position: absolute;
+}
+main {
+  height: 100%;
+}
+
+#home-view{
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background: url('https://images.unsplash.com/photo-1466812088935-5031240e09b7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6bcee68def898c74dc996a96665642e8&auto=format&fit=crop&w=3150&q=80') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+#discover-view {
+  height: 100%;
+  width: 100%;
+  background: url('https://images.unsplash.com/photo-1511268594014-0e9d3ea5c33e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2689e9cf62c8942a2fb10f3630b8b982&auto=format&fit=crop&w=3150&q=80') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+#about-view {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background: url('https://images.unsplash.com/photo-1516433910977-17cdec50a693?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c4b83d1b32fc9cdfb9ce54385c3e7504&auto=format&fit=crop&w=3150&q=80') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+@media only screen and (max-width: 960px) {
+  
+}

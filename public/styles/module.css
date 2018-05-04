@@ -1,9 +1,20 @@
+/******************* Home Classes *******************/
+#title-wrapper {
+  position: absolute;
+  width: 100%;
+  margin: 25% auto;
+  margin-top: 8rem;
+}
+#title-wrapper h3 {
+  padding: 0 1rem;
+}
 
-/* classes for D3 nodes */
+
+
+/******************* D3 Classes *******************/
 svg{
   padding-top: 25px;
 }
-
 .node {
   cursor: pointer;
 }
@@ -22,6 +33,8 @@ svg{
   stroke: #ccc;
   stroke-width: 1.5px;
 }
+
+
 /* part of spotify login */
 #login, #loggedin {
   display: none;
@@ -33,3 +46,9 @@ svg{
   width: 500px;
 }
 
+/******************* Desktop View!!! *******************/
+@media only screen and (min-width: 960px) {
+  div #title-wrapper {
+    margin-top: 14rem;
+  }
+}
