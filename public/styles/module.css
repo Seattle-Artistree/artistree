@@ -9,7 +9,12 @@
   padding: 0 1rem;
 }
 
+
+
 /******************* D3 Classes *******************/
+svg{
+  padding-top: 25px;
+}
 .node {
   cursor: pointer;
 }
