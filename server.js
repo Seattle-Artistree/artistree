@@ -178,9 +178,9 @@ app.post('/feedback', express.urlencoded({ extended: true }), (request, response
   const { comment } = request.body; 
 
   client.query(`
-        INSERT INTO feedback (
-          comment)
-           VALUES ($1);
+        INSERT INTO feedback 
+        (comment)
+        VALUES ($1);
     `,
     [
       comment,

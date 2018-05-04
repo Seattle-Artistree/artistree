@@ -16,8 +16,14 @@ var artists = [];
     }
     return hashParams;
   }
-  var userProfileSource = document.getElementById('user-profile-template').innerHTML, userProfileTemplate = Handlebars.compile(userProfileSource), userProfilePlaceholder = document.getElementById('user-profile');
-  var oauthSource = document.getElementById('oauth-template').innerHTML, oauthTemplate = Handlebars.compile(oauthSource), oauthPlaceholder = document.getElementById('oauth');
+  var userProfileSource = document.getElementById('user-profile-template')
+    .innerHTML, userProfileTemplate = Handlebars.compile(userProfileSource), 
+    userProfilePlaceholder = document.getElementById('user-profile');
+
+  var oauthSource = document.getElementById('oauth-template')
+    .innerHTML, oauthTemplate = Handlebars.compile(oauthSource), 
+    oauthPlaceholder = document.getElementById('oauth');
+
   var params = getHashParams();
   var access_token = params.access_token, refresh_token = params.refresh_token, error = params.error;
   if (error) {
@@ -93,9 +99,9 @@ var artists = [];
   }
 })();
 
-var margin = {top: 20, right: 120, bottom: 20, left: 120},
-  width = 960 - margin.right - margin.left,
-  height = 800 - margin.top - margin.bottom;
+var margin = {top: 100, right: 50, bottom: 20, left: 50},
+  width = jQuery(window).width(); - margin.right - margin.left,
+  height = jQuery(window).height(); - margin.top - margin.bottom;
 
 var i = 0,
   duration = 750,
@@ -236,33 +242,33 @@ function update(source) {
 }
 
 function unflatten(arr) {
-var tree = [],
-    mappedArr = {},
-    arrElem,
-    mappedElem;
+  var tree = [],
+      mappedArr = {},
+      arrElem,
+      mappedElem;
 
-// First map the nodes of the array to an object -> create a hash table.
-for(var i = 0, len = arr.length; i < len; i++) {
-  arrElem = arr[i];
-  mappedArr[arrElem.id] = arrElem;
-  mappedArr[arrElem.id].children = [];
-}
+  // First map the nodes of the array to an object -> create a hash table.
+  for(var i = 0, len = arr.length; i < len; i++) {
+    arrElem = arr[i];
+    mappedArr[arrElem.id] = arrElem;
+    mappedArr[arrElem.id].children = [];
+  }
 
 
-for (var id in mappedArr) {
-  if (mappedArr.hasOwnProperty(id)) {
-    mappedElem = mappedArr[id];
-    // If the element is not at the root level, add it to its parent array of children.
-    if (mappedElem.parentid) {
-      mappedArr[[mappedElem.parentid]]['children'].push(mappedElem);
-    }
-    // If the element is at the root level, add it to first level elements array.
-    else {
-      tree.push(mappedElem);
+  for (var id in mappedArr) {
+    if (mappedArr.hasOwnProperty(id)) {
+      mappedElem = mappedArr[id];
+      // If the element is not at the root level, add it to its parent array of children.
+      if (mappedElem.parentid) {
+        mappedArr[[mappedElem.parentid]]['children'].push(mappedElem);
+      }
+      // If the element is at the root level, add it to first level elements array.
+      else {
+        tree.push(mappedElem);
+      }
     }
   }
-}
-return tree;
+  return tree;
 }
 
 async function getOtherArtists(toBeSeen, x, totalArtists, callback) {
