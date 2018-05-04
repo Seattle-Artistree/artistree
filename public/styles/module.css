@@ -121,16 +121,15 @@ nav ul li:hover {
 }
 
 /******************* D3 Classes *******************/
-svg{
+svg {
   padding-top: 25px;
+  width: 95%;
+  margin: 0px auto;
 }
+
 .node {
   cursor: pointer;
 }
-
-/* #artist_image {
-    border-radius: 50%;
-} */
 
 .node circle {
   stroke-width: 1.5px;
