@@ -178,12 +178,28 @@ app.get('/test', (req, res) => res.send('It\'s working!'));
 
 app.post('/feedback', express.urlencoded({ extended: true }), (request, response) => {
 
-  const { feedback } = request.body; 
+  const { comment } = request.body; 
 
   client.query(`
-        INSERT INTO feeback (comment) VALUES ('${comment}');
-    `).then(result => response.send(result));
-})
+        INSERT INTO feedback (
+          comment)
+           VALUES ($1);
+    `,
+    [
+      comment,
+
+    ])
+    // function(err) {
+    // if (err) console.error('error',err);
+    // response.send(result)
+    .then(() => response.sendStatus(201));
+});
+
+
+//   client.query(`
+//         INSERT INTO feedback (comment) VALUES ('$comment');
+//     `).then(result => response.send(result));
+// })
 
 // let url = 'https://api.spotify.com/v1/me/top/artists/';
 
