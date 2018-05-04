@@ -65,6 +65,7 @@ var artists = [];
           });
 
           userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+
           $('#login').hide();
           $('#loggedin').show();
         }

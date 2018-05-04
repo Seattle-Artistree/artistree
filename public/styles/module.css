@@ -113,6 +113,12 @@ nav ul li:hover {
   padding: 0 1rem;
 }
 
+.dl-horizontal {
+  display: none;
+}
+.btn-default{
+  display: none
+}
 
 /******************* D3 Classes *******************/
 svg{
@@ -122,6 +128,10 @@ svg{
   cursor: pointer;
 }
 
+/* #artist_image {
+    border-radius: 50%;
+} */
+
 .node circle {
   stroke-width: 1.5px;
   border-radius: 50%;
@@ -129,6 +139,7 @@ svg{
 
 .node text {
   font: 12px sans-serif;
+  fill: white;
 }
 
 .link {

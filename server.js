@@ -128,9 +128,6 @@ app.get('/callback', function(req, res) {
         });
 
         // use the access token to access the Spotify Web API
-        // request.get(options, function(error, response, body) {
-        //   console.log(body);
-        // });
 
         // we can also pass the token to the browser to make requests from there
         res.redirect('/#' +
@@ -172,11 +169,6 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-app.get('/test', (req, res) => res.send('It\'s working!'));
-
-// let url = 'https://api.spotify.com/v1/me/top/artists/';
-
-// app.get(url, (req, res) => console.log(res));
 
 
 console.log('Listening on 8888');
