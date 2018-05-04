@@ -18,25 +18,10 @@
   },
   "homepage": "https://github.com/Seattle-Artistree/artistree-server#readme",
   "dependencies": {
-    "array-to-tree": "^2.2.1",
-    "commonjs": "0.0.1",
-    "cookie-parser": "^1.4.3",
-    "d3": "^5.1.0",
+    "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
-    "jquery": "^3.3.1",
-    "latest": "^0.2.0",
-    "npm": "^6.0.0",
-    "page": "^1.8.6",
     "pg": "^7.4.1",
-    "querystring": "^0.2.0",
-    "request": "^2.85.0",
-    "requirejs": "^2.3.5",
-    "spotify-web-api-js": "^0.24.0",
     "superagent": "^3.8.2"
-  },
-  "devDependencies": {
-    "babel-eslint": "^8.2.3",
-    "eslint": "^4.19.1"
   }
 }
