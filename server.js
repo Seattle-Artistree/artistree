@@ -172,6 +172,17 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/test', (req, res) => res.send('It\'s working!'));
 
+//test database info being stored
+
+app.post('/feedback', express.urlencoded({ extended: true }), (request, response) => {
+
+  const { feedback } = request.body; 
+
+  client.query(`
+        INSERT INTO feeback (comment) VALUES ('${comment}');
+    `).then(result => response.send(result));
+})
+
 // let url = 'https://api.spotify.com/v1/me/top/artists/';
 
 // app.get(url, (req, res) => console.log(res));
@@ -185,3 +196,4 @@ res.send(b)
 
 console.log('Listening on 8888');
 app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
+
