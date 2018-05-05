@@ -37,27 +37,14 @@ main {
 }
 
 .bio {
-  background: rgba(32, 44, 112, 0.671); 
+  background: black; 
   width:60%;
-  height:25%;
-  margin:10px auto;
-  border-radius: 5px;
-  padding: 20px;
-
+  margin:0 auto;
 }
 
 .bio-pic {
   float: left;
-  max-width: 15%;
-  max-height:90%;
-  margin-bottom: 20px;
-  margin-right: 10px;
-}
-
-button#submit {
-color: black;
-height: 30px;
-width: 100px;
+  max-width: 10%;
 }
 
 @media only screen and (max-width: 960px) {

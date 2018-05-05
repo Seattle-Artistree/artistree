@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)http://localhost:8888/about -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Artistree</title>
+		<link rel="stylesheet" href="./Artistree_files/bootstrap.min.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" media="screen" href="./Artistree_files/reset.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="./Artistree_files/base.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="./Artistree_files/layout.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="./Artistree_files/module.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="./Artistree_files/nav.css">
+		<link href="./Artistree_files/css" rel="stylesheet">
+		<!-- Application Templates -->
+		<script id="user-profile-template" type="text/x-handlebars-template">
+			<div class="media">
+				<div class="pull-left">
+					<!-- <img class="media-object" width="150" src="{{images.0.url}}" /> -->
+				</div>
+				<div class="media-body">
+					<!-- <dl class="dl-horizontal">
+						<dt>Artist name</dt><dd class="clearfix">{{name}}</dd>
+						<dt>Id</dt><dd>{{id}}</dd> -->
+						<!-- <dt>Email</dt><dd>{{email}}</dd>
+						<dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
+						<dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
+						<dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
+						<dt>Country</dt><dd>{{country}}</dd> -->
+					</dl>
+				</div>
+			</div>
+		</script>
+		
+		<script id="oauth-template" type="text/x-handlebars-template">
+			<dl class="dl-horizontal">
+				<dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
+				<dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
+			</dl>
+		</script>
+
+		<script type="text/x-handlebars-template" id="error-template">
+			<h3>Oops, something went wrong!</h3>
+			<p>{{status}}: {{statusText}}</p>
+		</script>
+	</head>
+
+	<body cz-shortcut-listen="true" class="menu-open">
+		<header>	<!-- The navigation bar goes here -->
+			<button class="js-menu menu active" type="button">
+				<span class="bar"></span>
+			</button>				
+			<nav>
+				<ul>
+					<li><a href="http://localhost:8888/">Home</a></li>
+					<li><a href="http://localhost:8888/discover">Discover</a></li>
+					<li><a href="http://localhost:8888/about">About</a></li>
+				</ul>
+				<ul id="social-1">
+					<li><a href="https://open.spotify.com/browse"><img src="./Artistree_files/405-spotify.png"></a></li>
+					<li><a href="https://twitter.com/"><img src="./Artistree_files/407-twitter.png"></a></li>
+				</ul>
+				<ul id="social-2">
+					<li><a href="https://github.com/Seattle-Artistree/artistree"><img src="./Artistree_files/433-github.png"></a></li>
+					<li><a href="https://www.facebook.com/"><img src="./Artistree_files/402-facebook2.png"></a></li>
+				</ul>
+			</nav>
+		</header>	<!-- The header/navigation bar ends here -->
+
+		<main>
+			<section id="home-view" class="page" style="display: none;">
+				<div class="bg">
+					<div id="title-wrapper">
+						<h1>Artistree</h1>
+						<h3>A fresh way to discover new music from Spotify, curated directly from your top artists.</h3><br>
+						<div class="page" id="login" style="display: none;">
+							<a href="http://localhost:8888/login" class="btn btn-primary">Log in with Spotify</a>
+						</div>
+						<div id="loggedin" style="display: none;">
+							<div id="user-profile"></div>
+							<div id="oauth"></div>
+							<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="discover-view" class="page" style="display: none;">
+				<h2>Discover</h2>
+				<p>Find new artists based off your library.</p>
+			<svg width="971" height="915"><g transform="translate(50,100)"></g></svg></section>
+
+			<section id="about-view" class="page" style="">
+				<h2 id="feedback-title">Questions, Comments, Suggestions?</h2>
+				<form class="feedback" id="feedback">
+					<!-- <input type="text" id="title" placeholder="title" /><br> -->
+					<input type="text" id="comment" placeholder="feedback"><br>
+					<button type="submit"></button>		
+					<!-- Need Photos and Bios!!! -->
+				</form>
+
+				<div class="bio">
+					<h3>Haley Mendoza</h3>
+					<img src="./Artistree_files/haley.jpg" class="bio-pic" alt="Haley Mendoza">
+					Haley has been working in research for the past 5 years and while she enjoys it, is looking for a new way to approach her passions. She has always had a keen interest in technology and enjoys the constant learning required when coding. Haley hopes to pair her well founded critical thinking, organization, and problem solving skills with her programming knowledge to begin a new career in software development.
+					</div>
+
+				<div class="bio">
+					<h3>Jay Silvas</h3>
+					<img src="./Artistree_files/jay.jpg" class="bio-pic" alt="Jay Silvas">
+					Jay Silvas is a Javascript and Python Developer passionate about designing and working on projects and applications that have a positive impact on people's lives. His background combines a broad spectrum of experience from military intelligence analysis to video game design, photography, and music.
+					</div>
+
+				<div class="bio">
+					<h3>Nicholas Welch</h3>
+					<img src="./Artistree_files/nick.jpg" class="bio-pic" alt="Nicholas Welch">Nicholas is passionate about helping maximize the quality of software, hardware, mobile devices, and web applications. Versatile, well-organized technology professional with demonstrated experience leading key testing activities for a wide range of software products, devices, and technologies. Reputation for being able to uncover, document, and coordinate the resolution of all manner of bugs and defects—in addition to being able to proactively identify future potential bugs/issues before they occur.
+				</div>
+
+				<div class="bio">
+					<h3>Ana Ortega</h3>
+					<img src="./Artistree_files/ana.jpg" class="bio-pic" alt="Ana Ortega">
+					Ana has a background in retail banking where she is passionate about improving internal processes to make day to day tasks more efficient for the consumer. She started coding a little over a year ago and is eager to continue her journey with Code Fellows and eventually start a new career. 
+				</div>
+		
+			</section>	
+
+			<section id="error-view" class="page" style="display: none;">
+				<h2>Oh noes, we messed up!</h2>
+			</section>
+		</main>
+	
+		<!-- External CDN Resources -->
+		<script src="./Artistree_files/jquery-3.2.1.min.js"></script>
+		<script src="./Artistree_files/handlebars.min.js"></script>
+		<script src="./Artistree_files/page.js"></script>
+		<script src="./Artistree_files/d3.v3.min.js"></script>
+		<!-- Application Resources -->
+		<script src="./Artistree_files/home-view.js"></script>
+		<script src="./Artistree_files/discover-view.js"></script>
+		<script src="./Artistree_files/about-view.js"></script>
+
+		<script src="./Artistree_files/traverse.js"></script>
+		<script src="./Artistree_files/tree.js"></script>
+		<script type="module" src="./Artistree_files/auth-template.js"></script>
+		<script src="./Artistree_files/routes.js"></script>
+		<script src="./Artistree_files/styles.js"></script>
+	
+</body></html>
