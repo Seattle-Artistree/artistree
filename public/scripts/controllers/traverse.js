@@ -189,10 +189,3 @@ function click(d) {
   }
   update(d);
 }
-
-// function Artist(id, name, image, parentId) {
-//   this.id = id;
-//   this.name = name;
-//   this.image = image;
-//   this.parentId = parentId;
-// }
