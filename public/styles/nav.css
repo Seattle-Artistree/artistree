@@ -1,4 +1,3 @@
-
 /******************* Hamburger Menu *******************/
 .menu {
   transition: 0.1s transform linear;
@@ -62,7 +61,7 @@ nav {
   right: 0;
   width: 175px;
   height: 100%;
-  background: rgb(9, 78, 69);
+  background: #052D4C;
   text-align: left;
   color:ghostwhite;
   position: fixed;
@@ -101,68 +100,20 @@ nav ul li:hover {
   -webkit-transition:color .5s ease-out, background .2s ease-in;
 }
 
-
-/******************* Home Classes *******************/
-#title-wrapper {
-  position: absolute;
-  width: 100%;
-  margin: 25% auto;
-  margin-top: 8rem;
-}
-#title-wrapper h3 {
-  padding: 0 1rem;
-}
-
-.dl-horizontal {
-  display: none;
-}
-.btn-default{
-  display: none
-}
-
-/******************* D3 Classes *******************/
-svg {
-  padding-top: 25px;
-  width: 95%;
-  margin: 0px auto;
-}
-
-.node {
-  cursor: pointer;
-}
-
-.node circle {
-  stroke-width: 1.5px;
-  border-radius: 50%;
-}
-
-.node text {
-  font: 12px sans-serif;
-  fill: white;
-}
-
-.link {
-  fill: none;
-  stroke: #ccc;
-  stroke-width: 1.5px;
-}
+/* social icons */
 
 
-/* part of spotify login */
-#login, #loggedin {
-  display: none;
-}
-.text-overflow {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 500px;
-}
+
 
 
 /******************* Desktop View!!! *******************/
-@media only screen and (min-width: 960px) {
-  div #title-wrapper {
-    margin-top: 14rem;
+@media only screen and (min-width: 800px) {
+  nav {
+    width: 300px;
+    transform: translateX(300px);
+  }
+  nav ul li {
+    color: ghostwhite;
+    padding: 1rem 2.5rem;
   }
 }
