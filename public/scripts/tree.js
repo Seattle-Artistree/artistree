@@ -31,7 +31,7 @@ var artists = [];
         refresh_token: refresh_token
       });
       $.ajax({
-        url: 'https://api.spotify.com/v1/artists/6vWDO969PvNqNYHIOW5v0m',
+        url: 'https://api.spotify.com/v1/artists/1l7ZsJRRS8wlW3WfJfPfNS',
         headers: {
           'Authorization': 'Bearer ' + access_token
         },
@@ -252,12 +252,14 @@ for (var id in mappedArr) {
   if (mappedArr.hasOwnProperty(id)) {
     mappedElem = mappedArr[id];
     // If the element is not at the root level, add it to its parent array of children.
-    if (mappedElem.parentid) {
-      mappedArr[[mappedElem.parentid]]['children'].push(mappedElem);
-    }
-    // If the element is at the root level, add it to first level elements array.
-    else {
-      tree.push(mappedElem);
+    if (mappedElem.parentid != 0 || !mappedArr[mappedElem.parentid]) {
+      if (mappedElem.parentid && mappedElem.parentid != 0) {
+        mappedArr[[mappedElem.parentid]]['children'].push(mappedElem);
+      }
+      // If the element is at the root level, add it to first level elements array.
+      else {
+        tree.push(mappedElem);
+      }
     }
   }
 }
@@ -276,9 +278,9 @@ async function getOtherArtists(toBeSeen, x, totalArtists, callback) {
         Authorization: 'Bearer ' + accessToken
       },
         success: function(response) {
-          var id1 = response.artists[2].id;
-          var name1 = response.artists[2].name;
-          var image1 = response.artists[2].images[0].url;
+          var id1 = response.artists[9].id;
+          var name1 = response.artists[9].name;
+          var image1 = response.artists[9].images[0].url;
           var relatedArtist1 = {'id': id1, 'name': name1, 'image': image1, 'parentid': next.id};
 
           var id2 = response.artists[19].id;
