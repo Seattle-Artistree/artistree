@@ -6,7 +6,7 @@ html {
 }
 body { /* this font applies to anything in the body */
 	font-family: 'Ubuntu', sans-serif;
-	background: linear-gradient(to bottom right, #290B15, rgb(20, 8, 39));
+	background: black;
 	color:ghostwhite;
 	width: 100%;
 	height:100%;
