@@ -149,9 +149,26 @@ function update(source) {
     .attr('transform', function(d) { return 'translate(' + source.x0 + ',' + source.y0 + ')'; })
     .on('click', click);
 
-  nodeEnter.append('circle')
+    // Append a circle
+  nodeEnter.append("svg:circle")
+  .attr("r", function(d) { return Math.sqrt(d.size) / 10 || 4.5; });
+
+
+// Append images
+  nodeEnter.append("svg:image")
+    .attr("xlink:href",  function(d) { return d.image;})
     .attr('r', 1e-6)
-    .style('filter', function(d) { return d.image; });
+    .style('border-radius', '50%')
+    .attr("x", function(d) { return -40;})
+    .attr("y", function(d) { return -40;})
+    .attr("height", 80)
+    .attr("width", 80);
+
+
+  // nodeEnter.append('image')
+  //   .attr('r', 1e-6)
+  //   .style('filter', function(d) { return d.image; })
+  //   .style('border-radius', '50%');
 
   /* DO NOT DELETE THIS COMMENT!!! 
      THIS IS COMMENTED OUT FOR TESTING.  
@@ -162,14 +179,14 @@ function update(source) {
     .attr('dy', '.35em')
     .text(function(d) { return d.name; });
 
-  node.append('image')
-    .attr('id', 'artist_image')
-    .style('border-radius', '50%')
-    .attr('xlink:href', function(d) { return d.image; })
-    .attr('x', -55)
-    .attr('y', -55)
-    .attr('width', 110)
-    .attr('height', 110);
+  // node.append('image')
+  //   .attr('id', 'artist_image')
+  //   // .style('border-radius', '50%')
+  //   .attr('xlink:href', function(d) { return d.image; })
+  //   .attr('x', -55)
+  //   .attr('y', -55)
+  //   .attr('width', 110)
+  //   .attr('height', 110);
 
   // Transition nodes to their new position.
   var nodeUpdate = node.transition()
