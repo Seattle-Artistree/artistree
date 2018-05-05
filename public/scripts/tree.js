@@ -31,15 +31,15 @@ var artists = [];
         refresh_token: refresh_token
       });
       $.ajax({
-        url: 'https://api.spotify.com/v1/artists/1l7ZsJRRS8wlW3WfJfPfNS',
+        url: 'https://api.spotify.com/v1/me/top/artists',
         headers: {
           'Authorization': 'Bearer ' + access_token
         },
         success: function (response) {
           accessToken = access_token;
-          var id = response.id;
-          var name = response.name;
-          var image = response.images[0].url;
+          var id = response.items[2].id;
+          var name = response.items[2].name;
+          var image = response.items[2].images[0].url;
           var parentid = 0;
           var topArtist = {'id': id, 'name': name, 'image': image, 'parentid': parentid};
           artists.push(topArtist);

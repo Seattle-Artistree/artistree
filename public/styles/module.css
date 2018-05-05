@@ -122,9 +122,9 @@ nav ul li:hover {
 
 /******************* D3 Classes *******************/
 svg {
-  padding-top: 25px;
-  width: 95%;
+  padding-top: 50px;
   margin: 0px auto;
+  display: block; 
 }
 
 .node {
