@@ -100,8 +100,24 @@ nav ul li:hover {
   -webkit-transition:color .5s ease-out, background .2s ease-in;
 }
 
-/* social icons */
-
+@media only screen and (max-width: 799px) {
+  /* social icons */
+  ul#social-1, ul#social-2 {
+    max-width: 50%;
+    margin-right: 0px;
+    float: left;
+  }
+  #social-1 li {
+    text-align: center;
+    display: inline-block;
+    max-width: 100%;
+  }
+  #social-2 li {
+    text-align: center;
+    display: inline-block;
+    max-width: 100%;
+  }
+}
 
 
 

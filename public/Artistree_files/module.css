@@ -1,3 +1,4 @@
+
 /******************* Hamburger Menu *******************/
 .menu {
   transition: 0.1s transform linear;
@@ -121,9 +122,9 @@ nav ul li:hover {
 
 /******************* D3 Classes *******************/
 svg {
-  padding-top: 50px;
+  padding-top: 25px;
+  width: 95%;
   margin: 0px auto;
-  display: block; 
 }
 
 .node {
