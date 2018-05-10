@@ -1,5 +1,4 @@
 'use strict';
-
 var accessToken = '';
 var toBeSeen = [];
 var root;
@@ -110,37 +109,38 @@ var artists = [];
 
 
 // *********** Artist Handler Logic ***********
-
 function unflatten(arr) {
   var tree = [],
       mappedArr = {},
       arrElem,
       mappedElem;
-
+  
   // First map the nodes of the array to an object -> create a hash table.
   for(var i = 0, len = arr.length; i < len; i++) {
     arrElem = arr[i];
     mappedArr[arrElem.id] = arrElem;
     mappedArr[arrElem.id].children = [];
   }
-
-
+  
+  
   for (var id in mappedArr) {
     if (mappedArr.hasOwnProperty(id)) {
       mappedElem = mappedArr[id];
       // If the element is not at the root level, add it to its parent array of children.
-      if (mappedElem.parentId) {
-        mappedArr[[mappedElem.parentId]]['children'].push(mappedElem);
-      }
-      // If the element is at the root level, add it to first level elements array.
-      else {
-        tree.push(mappedElem);
+      if (mappedElem.parentid != 0 || !mappedArr[mappedElem.parentid]) {
+        if (mappedElem.parentid && mappedElem.parentid != 0) {
+          mappedArr[[mappedElem.parentid]]['children'].push(mappedElem);
+        }
+        // If the element is at the root level, add it to first level elements array.
+        else {
+          tree.push(mappedElem);
+        }
       }
     }
   }
   return tree;
 }
-
+  
 async function getOtherArtists(toBeSeen, x, totalArtists, callback) {
   console.log("TOTAL ARTISTS:  ", totalArtists);
   console.log("TO BE SEEN:  ", toBeSeen);
@@ -153,15 +153,14 @@ async function getOtherArtists(toBeSeen, x, totalArtists, callback) {
         Authorization: 'Bearer ' + accessToken
       },
         success: function(response) {
-          var id1 = response.artists[2].id;
-          var name1 = response.artists[2].name;
-          var image1 = response.artists[2].images[0].url;
-          var relatedArtist1 = {'id': id1, 'name': name1, 'image': image1, 'parentId': next.id};
-
+          var id1 = response.artists[9].id;
+          var name1 = response.artists[9].name;
+          var image1 = response.artists[9].images[0].url;
+          var relatedArtist1 = {'id': id1, 'name': name1, 'image': image1, 'parentid': next.id};
           var id2 = response.artists[19].id;
           var name2 = response.artists[19].name;
           var image2 = response.artists[19].images[0].url;
-          var relatedArtist2 = {'id': id2, 'name': name2, 'image': image2, 'parentId': next.id};
+          var relatedArtist2 = {'id': id2, 'name': name2, 'image': image2, 'parentid': next.id};
 
           toBeSeen.push(relatedArtist1);
           toBeSeen.push(relatedArtist2);
@@ -176,16 +175,4 @@ async function getOtherArtists(toBeSeen, x, totalArtists, callback) {
       x = x + 1;
   }
   callback(totalArtists);
-}
-
-// Toggle children on click.
-function click(d) {
-  if (d.children) {
-    d._children = d.children;
-    d.children = null;
-  } else {
-    d.children = d._children;
-    d._children = null;
-  }
-  update(d);
 }

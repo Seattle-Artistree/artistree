@@ -1,7 +1,7 @@
-
-var margin = {top: 100, right: 50, bottom: 20, left: 50},
-  width = jQuery(window).width(); - margin.right - margin.left,
-  height = jQuery(window).height(); - margin.top - margin.bottom;
+'use strict';
+var margin = {top: 20, right: 120, bottom: 20, left: 120},
+  width = 960 - margin.right - margin.left,
+  height = 800 - margin.top - margin.bottom;
 
 var i = 0,
   duration = 750,
@@ -56,9 +56,26 @@ function update(source) {
     .attr('transform', function(d) { return 'translate(' + source.x0 + ',' + source.y0 + ')'; })
     .on('click', click);
 
-  nodeEnter.append('circle')
+    // Append a circle
+  nodeEnter.append("svg:circle")
+  .attr("r", function(d) { return Math.sqrt(d.size) / 10 || 4.5; });
+
+
+// Append images
+  nodeEnter.append("svg:image")
+    .attr("xlink:href",  function(d) { return d.image;})
     .attr('r', 1e-6)
-    .style('filter', function(d) { return d.image; });
+    .style('border-radius', '50%')
+    .attr("x", function(d) { return -40;})
+    .attr("y", function(d) { return -40;})
+    .attr("height", 80)
+    .attr("width", 80);
+
+
+  // nodeEnter.append('image')
+  //   .attr('r', 1e-6)
+  //   .style('filter', function(d) { return d.image; })
+  //   .style('border-radius', '50%');
 
   /* DO NOT DELETE THIS COMMENT!!! 
      THIS IS COMMENTED OUT FOR TESTING.  
@@ -69,14 +86,14 @@ function update(source) {
     .attr('dy', '.35em')
     .text(function(d) { return d.name; });
 
-  node.append('image')
-    .attr('id', 'artist_image')
-    .style('border-radius', '50%')
-    .attr('xlink:href', function(d) { return d.image; })
-    .attr('x', -55)
-    .attr('y', -55)
-    .attr('width', 110)
-    .attr('height', 110);
+  // node.append('image')
+  //   .attr('id', 'artist_image')
+  //   // .style('border-radius', '50%')
+  //   .attr('xlink:href', function(d) { return d.image; })
+  //   .attr('x', -55)
+  //   .attr('y', -55)
+  //   .attr('width', 110)
+  //   .attr('height', 110);
 
   // Transition nodes to their new position.
   var nodeUpdate = node.transition()
@@ -139,4 +156,16 @@ function update(source) {
     d.x0 = d.x;
     d.y0 = d.y;
   });
+}
+
+// Toggle children on click.
+function click(d) {
+  if (d.children) {
+    d._children = d.children;
+    d.children = null;
+  } else {
+    d.children = d._children;
+    d._children = null;
+  }
+  update(d);
 }
